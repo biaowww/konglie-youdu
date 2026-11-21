@@ -21,27 +21,11 @@
       "pass": true
     },
     {
-      "name": "yi 进入正确关卡",
+      "name": "chen 进入正确关卡",
       "pass": true
     },
     {
       "name": "隐对话框使用指定头像",
-      "pass": true
-    },
-    {
-      "name": "yi 进入里世界",
-      "pass": true
-    },
-    {
-      "name": "yi 可完成",
-      "pass": true
-    },
-    {
-      "name": "yi 卡牌可翻面",
-      "pass": true
-    },
-    {
-      "name": "chen 进入正确关卡",
       "pass": true
     },
     {
@@ -53,35 +37,15 @@
       "pass": true
     },
     {
-      "name": "man 进入正确关卡",
+      "name": "yi 进入正确关卡",
       "pass": true
     },
     {
-      "name": "man 进入里世界",
+      "name": "yi 进入里世界",
       "pass": true
     },
     {
-      "name": "man 可完成",
-      "pass": true
-    },
-    {
-      "name": "man 卡牌可翻面",
-      "pass": true
-    },
-    {
-      "name": "chi 进入正确关卡",
-      "pass": true
-    },
-    {
-      "name": "chi 进入里世界",
-      "pass": true
-    },
-    {
-      "name": "chi 可完成",
-      "pass": true
-    },
-    {
-      "name": "chi 卡牌可翻面",
+      "name": "yi 可完成",
       "pass": true
     },
     {
@@ -101,7 +65,31 @@
       "pass": true
     },
     {
-      "name": "tan 卡牌可翻面",
+      "name": "chi 进入正确关卡",
+      "pass": true
+    },
+    {
+      "name": "chi 进入里世界",
+      "pass": true
+    },
+    {
+      "name": "chi 可完成",
+      "pass": true
+    },
+    {
+      "name": "chi 卡牌可翻面",
+      "pass": true
+    },
+    {
+      "name": "man 进入正确关卡",
+      "pass": true
+    },
+    {
+      "name": "man 进入里世界",
+      "pass": true
+    },
+    {
+      "name": "man 可完成",
       "pass": true
     },
     {
@@ -122,16 +110,16 @@
     }
   ],
   "levels": [
-    "yi",
     "chen",
-    "man",
+    "yi",
+    "tan",
     "chi",
-    "tan"
+    "man"
   ],
   "consoleErrors": [],
   "networkErrors": [],
-  "requests": 29,
-  "encodedBytes": 64610,
-  "manFps": 61,
-  "chiFps": 60
+  "requests": 27,
+  "encodedBytes": 3006742,
+  "chiFps": 61,
+  "manFps": 61
 }
