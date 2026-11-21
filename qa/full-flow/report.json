@@ -1,0 +1,137 @@
+{
+  "checks": [
+    {
+      "name": "标题使用空裂：游渡",
+      "pass": true
+    },
+    {
+      "name": "出城漫画第一页",
+      "pass": true
+    },
+    {
+      "name": "出城漫画第二页",
+      "pass": true
+    },
+    {
+      "name": "地图头像 icon 已加载",
+      "pass": true
+    },
+    {
+      "name": "五关顺序包含五个不同关卡",
+      "pass": true
+    },
+    {
+      "name": "yi 进入正确关卡",
+      "pass": true
+    },
+    {
+      "name": "隐对话框使用指定头像",
+      "pass": true
+    },
+    {
+      "name": "yi 进入里世界",
+      "pass": true
+    },
+    {
+      "name": "yi 可完成",
+      "pass": true
+    },
+    {
+      "name": "yi 卡牌可翻面",
+      "pass": true
+    },
+    {
+      "name": "chen 进入正确关卡",
+      "pass": true
+    },
+    {
+      "name": "chen 进入里世界",
+      "pass": true
+    },
+    {
+      "name": "chen 可完成",
+      "pass": true
+    },
+    {
+      "name": "man 进入正确关卡",
+      "pass": true
+    },
+    {
+      "name": "man 进入里世界",
+      "pass": true
+    },
+    {
+      "name": "man 可完成",
+      "pass": true
+    },
+    {
+      "name": "man 卡牌可翻面",
+      "pass": true
+    },
+    {
+      "name": "chi 进入正确关卡",
+      "pass": true
+    },
+    {
+      "name": "chi 进入里世界",
+      "pass": true
+    },
+    {
+      "name": "chi 可完成",
+      "pass": true
+    },
+    {
+      "name": "chi 卡牌可翻面",
+      "pass": true
+    },
+    {
+      "name": "tan 进入正确关卡",
+      "pass": true
+    },
+    {
+      "name": "tan 进入里世界",
+      "pass": true
+    },
+    {
+      "name": "贪背包达到目标回声",
+      "pass": true
+    },
+    {
+      "name": "tan 可完成",
+      "pass": true
+    },
+    {
+      "name": "tan 卡牌可翻面",
+      "pass": true
+    },
+    {
+      "name": "五关全部完成",
+      "pass": true
+    },
+    {
+      "name": "三次触碰后到达最终结局",
+      "pass": true
+    },
+    {
+      "name": "无控制台错误",
+      "pass": true
+    },
+    {
+      "name": "无失败资源",
+      "pass": true
+    }
+  ],
+  "levels": [
+    "yi",
+    "chen",
+    "man",
+    "chi",
+    "tan"
+  ],
+  "consoleErrors": [],
+  "networkErrors": [],
+  "requests": 29,
+  "encodedBytes": 64610,
+  "manFps": 61,
+  "chiFps": 60
+}

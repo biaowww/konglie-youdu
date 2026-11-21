@@ -1,0 +1,42 @@
+{
+  "checks": [
+    {
+      "name": "移动端标题无横向溢出",
+      "pass": true
+    },
+    {
+      "name": "痴进入里世界",
+      "pass": true
+    },
+    {
+      "name": "触摸拖动不误收集",
+      "pass": true
+    },
+    {
+      "name": "触摸点选可收集目标",
+      "pass": true
+    },
+    {
+      "name": "触摸操作不滚动页面",
+      "pass": true
+    },
+    {
+      "name": "贪背包完整位于屏幕内",
+      "pass": true
+    },
+    {
+      "name": "移动端无横向溢出",
+      "pass": true
+    },
+    {
+      "name": "无控制台错误",
+      "pass": true
+    },
+    {
+      "name": "无失败资源",
+      "pass": true
+    }
+  ],
+  "consoleErrors": [],
+  "networkErrors": []
+}
