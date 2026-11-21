@@ -6,3 +6,4 @@ qa/**/profile*/
 release/
 qa/public-*
 qa/chrome-profile/
+qa/remote-source*
