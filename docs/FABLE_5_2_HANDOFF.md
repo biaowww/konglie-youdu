@@ -18,7 +18,15 @@
 - `tools/qa_art_reboot.mjs` 已验证四格漫画、开始界面、神像切换、三个痴、375px 触摸，控制台错误与失败资源均为 0。
 - GitHub 当前账号具有 admin / maintain / pull / push / triage 与 workflow 权限。
 
-上述是本机验证，不等于 sgp-dev 自身授权。sgp-dev 开始开发前仍需确认其 MCP、文件和凭证状态。
+上述是本机验证。sgp-dev 已在 2026-11-25 另行实测通过：
+
+- SSH 别名为 `sg-dev`；远程仓库为 `/home/ubuntu/offcircle_dev/konglie-youdu`，使用同一分支。
+- Node.js v24.21.0、Python 3.12.3；Pillow 13.0.0 安装在 `/home/ubuntu/.local/share/youdu-python`，以 `PYTHONPATH` 引用，不修改系统 Python。
+- OpenRouter 的 Fable 文本和 GPT Image 小墨点均已实际成功；图像结果与元数据已上传 `03 Art/AI生成资产/claude/`。
+- Drive 通过现有 `rclone gdrive:` 读写，不依赖本机 MCP；原始文档与美术只读副本位于 `/home/ubuntu/offcircle_dev/reference/`。
+- Chrome 为 `/home/ubuntu/.cache/ms-playwright/chromium-1255/chrome-linux64/chrome`。服务器需设置 `CHROME_NO_SANDBOX=1` 和 `LD_LIBRARY_PATH=/home/ubuntu/.local/share/youdu-chrome-libs/usr/lib/x86_64-linux-gnu`；这些仅限隔离测试服务器。
+- 远程 `npm ci`、build、lint 与 `tools/qa_art_reboot.mjs` 已实际通过，桌面、375px 触摸、控制台和失败资源检查均通过。
+- 远程预览为 `http://127.0.0.1:7106/art-reboot.html`，通过 Mac 的 SSH 本地转发查看，不开放新的公网端口。
 
 ## 开始时的要求
 
