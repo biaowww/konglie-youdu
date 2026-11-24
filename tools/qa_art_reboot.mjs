@@ -9,7 +9,7 @@ fs.mkdirSync(OUT, { recursive: true })
 const URL = process.env.GAME_URL || 'http://127.0.0.1:7106/art-reboot.html'
 const CHROME_PATH = process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 const child = spawn(CHROME_PATH, [
-  '--headless=new', '--remote-debugging-pipe', `--user-data-dir=${path.join(OUT, 'profile')}`,
+  '--headless=new', ...(process.env.CHROME_NO_SANDBOX === '1' ? ['--no-sandbox'] : []), '--remote-debugging-pipe', `--user-data-dir=${path.join(OUT, 'profile')}`,
   '--no-first-run', '--disable-extensions', '--disable-sync', '--disable-gpu', '--hide-scrollbars', '--mute-audio', '--window-size=1440,900', 'about:blank',
 ], { stdio: ['ignore', 'ignore', 'pipe', 'pipe', 'pipe'] })
 const writer = child.stdio[3]
