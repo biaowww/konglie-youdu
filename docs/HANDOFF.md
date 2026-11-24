@@ -6,6 +6,8 @@
 
 已实现：出城、入山、换序地图、五关、概率卡牌、复色回放、三次触碰结局、进度保存、音量控制和程序音频。
 
+V1 已将出城升级为三镜旅行测试版，并完成原画透明 sprite 与卡牌框分层。尚未完成多路线 DAG、疑／贪／嗔／慢的新机制、忿的完整伏笔和主人—猫重逢；这些仍是下一阶段 P0，不应把当前完整流程当作新需求全部完成。
+
 ## 2. 设计优先级
 
 1. `02 GDD/空裂：游渡-主GDD.docx`
@@ -32,7 +34,8 @@
 
 ## 3. 技术结构
 
-- `app/src/App.tsx`：标题、漫画、入山、地图、关卡、卡牌、结局和存档。
+- `app/src/App.tsx`：标题、出城、入山、地图、关卡、卡牌、结局和存档。
+- `app/src/components/JourneyPrologue.tsx`：城门、地图、卦山三镜；以 24fps 驱动角色位移、镜头和复色，支持跳过与减少动态效果。
 - `app/src/components/LevelShell.tsx`：outer → transition → inner → complete 统一关卡状态机。
 - `app/src/components/MapScreen.tsx`：上行节点、换序、游头像、复色与回放。
 - `app/src/components/Ending.tsx`：三次触碰与角色靠近。
@@ -52,10 +55,10 @@
 ## 5. 美术管线
 
 ```bash
-python3 tools/prepare_assets.py
+YOUDU_DRIVE_ROOT="/path/to/元艺极客和超元" python3 tools/prepare_assets.py
 ```
 
-脚本只读 Drive 原图，生成 WebP、透明图、缩放图和 `app/public/assets/manifest.json`。源文件路径、输出尺寸与字节数均可追溯。
+脚本只读 Drive 原图，生成 WebP、透明图、缩放图和本机 `app/art-manifest.json`。源文件路径、输出尺寸与字节数均可追溯；清单不公开。
 
 疑使用单幅碑林并填平透明边界；渡仅通过边缘 flood fill 去背景，避免误伤浅蓝本体。不要简单全局去白色。
 
@@ -82,7 +85,7 @@ node ../tools/qa_mobile.mjs
 
 ## 8. 能力与内容缺口
 
-- 当前环境未检测到 Godot 安装，没有 Godot 工程或 Web 导出。
+- Godot 4.7.2 与匹配导出模板已安装，最小项目已实际完成 Web 导出并在浏览器启动；正式 Godot 工程仍未建立，当前交付是 Web 版本。
 - 24 帧行走为 AI 辅助测试资产，需人工修正耳缺、爪部、包带和帧间一致性。
 - 部分场景只有概念拼贴，表里配对并非最终生产分层。
 - 无正式录制配乐、配音、最终 CG 动画。
@@ -90,8 +93,9 @@ node ../tools/qa_mobile.mjs
 
 ## 9. 推荐下一步
 
-1. 团队完整试玩，记录每关完成时长、误点、提示和放弃位置。
-2. 先收敛嗔、慢与贪，不急着增加第六种机制。
-3. 美术优先替换：结局渡、地图路线、嗔与疑的场景配对、行走清稿。
-4. 若转 Godot，复用 `content.ts` 的配置、种子、资产和状态流，用 Node2D／Control、CanvasItem Shader、SpriteFrames 和 InputEvent 重写表现层，不要逐行翻译 DOM。
-5. 保留桌面全流程与移动端验收作为每次修改的回归门槛。
+1. 先完成 4 层＋山顶的多路线地图和真实地点对齐，每局 3 个主题关卡＋1 个轻事件。
+2. 疑改为 4×5 行列滑动三连消除；贪补足落物节奏与六格取舍；嗔、慢脱离点字。
+3. 串联主人—猫关系、忿的两次前期伏笔和重逢画面；不做长篇设定说明。
+4. 等你或原画师审核 V1 小样后再扩展美术，优先修正左耳缺口、帧间结构和角色多角度。
+5. 若转 Godot，复用 `content.ts` 的配置、种子、资产和状态流，用 Node2D／Control、CanvasItem Shader、SpriteFrames 和 InputEvent 重写表现层，不要逐行翻译 DOM。
+6. 保留桌面全流程与移动端验收作为每次修改的回归门槛。

@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
-import { ArrowRight, Play, RotateCcw, Volume2, VolumeX, X } from 'lucide-react'
+import { Play, RotateCcw, Volume2, VolumeX, X } from 'lucide-react'
 import MapScreen from './components/MapScreen'
 import LevelShell from './components/LevelShell'
 import Guide from './components/Guide'
 import Ending from './components/Ending'
-import { LEVELS, PROLOGUE, rollCard, shuffleLevels } from './game/content'
+import JourneyPrologue from './components/JourneyPrologue'
+import { LEVELS, rollCard, shuffleLevels } from './game/content'
 import { audio } from './game/audio'
 import type { LevelId, RewardCard, SaveState, Screen } from './game/types'
 import './App.css'
@@ -24,7 +25,6 @@ function loadSave(): SaveState | null {
 export default function App() {
   const [saved] = useState<SaveState | null>(loadSave)
   const [screen, setScreen] = useState<Screen>('title')
-  const [prologuePage, setProloguePage] = useState(0)
   const [arrived, setArrived] = useState(false)
   const [seed, setSeed] = useState(saved?.seed ?? 20261121)
   const [order, setOrder] = useState<LevelId[]>(saved?.order ?? shuffleLevels(20261121))
@@ -55,7 +55,7 @@ export default function App() {
     startAudio()
     const nextSeed = Math.floor(Date.now() % 1000000)
     setSeed(nextSeed); setOrder(shuffleLevels(nextSeed)); setCompleted([]); setCards([])
-    setCurrentLevel(null); setProloguePage(0); setActiveCard(null); setShowCollection(false); setReplay(false)
+    setCurrentLevel(null); setActiveCard(null); setShowCollection(false); setReplay(false)
     setScreen('prologue')
   }
 
@@ -91,7 +91,7 @@ export default function App() {
         <section className="title-screen">
           <div className="title-background" />
           <div className="title-content">
-            <img className="title-logo" src="/assets/logo.webp" alt="空裂：游渡标志" />
+            <img className="title-logo" src="./assets/logo.webp" alt="空裂：游渡标志" />
             <span className="title-overline">空裂世界观 · 卦山篇</span>
             <h1>空裂：游渡</h1>
             <p>一只猫，一座山，和一次重新建立联系的攀登。</p>
@@ -104,21 +104,11 @@ export default function App() {
         </section>
       )}
 
-      {screen === 'prologue' && (
-        <section className="prologue-screen">
-          <div className="comic-page">
-            <img src={PROLOGUE[prologuePage].image} alt={PROLOGUE[prologuePage].title} />
-            <div className="comic-caption"><span>{String(prologuePage + 1).padStart(2, '0')} / 02</span><h2>{PROLOGUE[prologuePage].title}</h2><p>{PROLOGUE[prologuePage].text}</p></div>
-          </div>
-          <button type="button" className="primary-button prologue-next" onClick={() => {
-            audio.play('click')
-            if (prologuePage === 0) setProloguePage(1)
-            else { setArrived(false); setScreen('arrival') }
-          }}>
-            {prologuePage === 0 ? '翻到下一页' : '回到卦山'}<ArrowRight size={18} />
-          </button>
-        </section>
-      )}
+      {screen === 'prologue' && <JourneyPrologue onComplete={() => {
+        audio.play('switch')
+        setArrived(false)
+        setScreen('arrival')
+      }} />}
 
       {screen === 'arrival' && (
         <section className={`arrival-screen ${arrived ? 'arrived' : ''}`}>
@@ -142,7 +132,7 @@ export default function App() {
             <button type="button" className="modal-close icon-button" onClick={() => setActiveCard(null)} aria-label="关闭卡牌"><X size={20} /></button>
             <span className="eyebrow">山中拾得 · 世界观卡牌</span>
             <button type="button" className={`reward-card ${flipped ? 'card-flipped' : ''}`} onClick={() => setFlipped((value) => !value)} aria-label={flipped ? '查看卡牌正面' : '翻开卡牌背面'}>
-              {!flipped ? <><img className="card-frame-image" src="/assets/card-frame.webp" alt="卡牌框" /><img className="card-art-image" src={activeCard.image} alt={activeCard.name} /><span className="card-name">{activeCard.name}</span></> : <blockquote>「{activeCard.quote}」</blockquote>}
+              {!flipped ? <><img className="card-frame-image" src="./assets/card-frame.webp" alt="卡牌框" /><img className="card-art-image" src={activeCard.image} alt={activeCard.name} /><span className="card-name">{activeCard.name}</span></> : <blockquote>「{activeCard.quote}」</blockquote>}
             </button>
             <p className="card-instruction">点击卡牌翻面</p>
             <button type="button" className="primary-button" onClick={() => setActiveCard(null)}>收入卡册</button>
@@ -164,7 +154,7 @@ export default function App() {
         <input aria-label="音量" type="range" min="0" max="1" step="0.05" value={volume} onChange={(event) => { startAudio(); setVolume(Number(event.target.value)) }} />
       </div>
 
-      {screen !== 'title' && screen !== 'level' && <button type="button" className="new-run-button text-button" onClick={newGame}><RotateCcw size={14} />新的攀登</button>}
+      {screen !== 'title' && screen !== 'prologue' && screen !== 'level' && <button type="button" className="new-run-button text-button" onClick={newGame}><RotateCcw size={14} />新的攀登</button>}
       {screen === 'arrival' && <Guide text="隐：别怕。山只是暂时听不见你。" />}
     </main>
   )

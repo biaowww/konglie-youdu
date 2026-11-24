@@ -15,9 +15,9 @@ export default function Ending({ onRestart }: { onRestart: () => void }) {
       <div className="ending-background" style={{ filter: `grayscale(${Math.max(0, 1 - touches / 3)}) saturate(${0.8 + touches * 0.35})` }} />
       <div className="ending-rift" aria-hidden="true" />
       <div className={`ending-characters touch-${touches}`}>
-        <img className="ending-you" src="/assets/you-front.webp" alt="游" />
-        <img className="ending-du" src="/assets/du.webp" alt="渡" />
-        <img className="ending-jade" src="/assets/jade.webp" alt="玉玦重新拼合" />
+        <img className="ending-you" src="./assets/you-front.webp" alt="游" />
+        <img className="ending-du" src="./assets/du.webp" alt="渡" />
+        <img className="ending-jade" src="./assets/jade.webp" alt="玉玦重新拼合" />
       </div>
       <div className="ending-copy">
         {!complete ? (

@@ -5,6 +5,14 @@
       "pass": true
     },
     {
+      "name": "出城舞台完整位于375px屏幕内",
+      "pass": true
+    },
+    {
+      "name": "跳过出城进入入山",
+      "pass": true
+    },
+    {
       "name": "痴进入里世界",
       "pass": true
     },

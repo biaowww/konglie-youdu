@@ -9,13 +9,13 @@
 
 ## 生成方式
 
-`tools/prepare_assets.py` 将原图复制处理为 `app/public/assets/`：
+`tools/prepare_assets.py` 将原图复制处理为 `app/public/assets/`。运行前将 `YOUDU_DRIVE_ROOT` 指向本机的 `元艺极客和超元` 目录，避免在公开仓库写入个人绝对路径：
 
 - 场景最大边 1920px，地图 2200px，头像与道具按用途缩小。
 - 默认 WebP quality 84；GIF 仅保留作动画预览。
 - 疑场景使用单幅碑林并填平透明拼贴边界。
 - 渡使用边缘 flood fill 去背景，保留浅蓝灵猫本体。
-- `manifest.json` 记录源路径、原始尺寸、输出尺寸与字节数。
+- `app/art-manifest.json` 记录源路径、原始尺寸、输出尺寸与字节数；仅保留在本机，已加入 `.gitignore`，不进入公开仓库或发布包。
 
 ## 关键资源
 
@@ -35,3 +35,11 @@
 - 表里场景配对、地图细节、结局 CG 和角色动画仍需人工制作或清稿。
 - 正式配乐、配音与环境音录制未完成。
 - 游与渡的更多表情、忿的完整多色／多物种变体未全部制作。
+
+## V1 测试资产
+
+- `you-walk-alpha.webp`：24 帧 AI 辅助行走测试序列，已去除纸底；包与玉玦跟随来自原帧，尚未人工清稿。
+- `fen-red.webp`、`fen-green.webp`：从原画提取的透明测试 sprite，保留彩色粉笔毛发，不是新生成或人工清稿。
+- `card-frame.webp`：原卡牌框转为浅色透明蒙版，卡面、文字与遮罩继续使用独立层。
+- 游 GPT Image 小样只用于风格对照，左耳缺口仍需修正，未作为定稿接入。忿的在线生成请求超时，未产生候选图，也未重复扣费重试。
+- 对照图：`qa/v1/you-style-review.png`、`qa/v1/fen-on-dark.png`。

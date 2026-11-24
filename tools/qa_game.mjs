@@ -1,8 +1,9 @@
 import { spawn } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const ROOT = '/Users/wvngbvao483/offcircle_dev/konglie-youdu'
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const OUT = path.join(ROOT, 'qa/full-flow')
 fs.mkdirSync(OUT, { recursive: true })
 const URL = process.env.GAME_URL || 'http://127.0.0.1:7100/'
@@ -64,11 +65,17 @@ try {
   await sleep(300)
   check('标题使用空裂：游渡', await evaluate(`document.querySelector('.title-content h1')?.textContent==='空裂：游渡'`))
   await screenshot('title.png')
-  await evaluate(`document.querySelector('.title-actions .primary-button').click()`); await sleep(250)
-  check('出城漫画第一页', await evaluate(`document.querySelector('.comic-caption h2')?.textContent==='出城'`))
-  await evaluate(`document.querySelector('.prologue-next').click()`); await sleep(200)
-  check('出城漫画第二页', await evaluate(`document.querySelector('.comic-caption h2')?.textContent==='归山'`))
-  await evaluate(`document.querySelector('.prologue-next').click()`); await sleep(1800)
+  await evaluate(`document.querySelector('.title-actions .primary-button').click()`); await sleep(650)
+  check('出城使用24帧分层动画', await evaluate(`Number(document.querySelector('.journey-screen')?.dataset.frame)>10`))
+  await screenshot('prologue-city.png')
+  await sleep(3400)
+  check('地图旅行镜头已出现', await evaluate(`document.querySelector('.journey-screen')?.dataset.shot==='2' && Number(getComputedStyle(document.querySelector('.journey-map')).opacity)>.9`))
+  await screenshot('prologue-map.png')
+  await sleep(3600)
+  check('卦山镜头已出现', await evaluate(`document.querySelector('.journey-screen')?.dataset.shot==='3' && Number(getComputedStyle(document.querySelector('.journey-mountain')).opacity)>.9`))
+  await screenshot('prologue-mountain.png')
+  check('动画自然播放到240帧', await until(`!!document.querySelector('.journey-continue') && document.querySelector('.journey-screen')?.dataset.frame==='240'`, 6000))
+  await evaluate(`document.querySelector('.journey-continue').click()`); await sleep(1800)
   await evaluate(`document.querySelector('.arrival-copy .primary-button').click()`); await sleep(400)
   await until(`document.querySelector('.map-you-icon')?.naturalWidth>0`, 10000)
   check('地图头像 icon 已加载', await evaluate(`document.querySelector('.map-you-icon')?.naturalWidth>0`))
@@ -79,7 +86,7 @@ try {
   for (const level of order) {
     await evaluate(`document.querySelector('.map-node.node-next').click()`); await sleep(200)
     check(`${level} 进入正确关卡`, await evaluate(`document.querySelector('.level-screen')?.dataset.level==='${level}'`))
-    if (report.levels.length === 0) check('隐对话框使用指定头像', await evaluate(`document.querySelector('.guide-avatar')?.getAttribute('src')==='/assets/yin-icon.webp'`))
+    if (report.levels.length === 0) check('隐对话框使用指定头像', await evaluate(`document.querySelector('.guide-avatar')?.getAttribute('src')==='./assets/yin-icon.webp'`))
     await evaluate(`document.querySelector('.statue-hotspot').click()`); await sleep(1450)
     check(`${level} 进入里世界`, await evaluate(`document.querySelector('.level-screen')?.dataset.phase==='inner'`))
     await screenshot(`level-${level}.png`)

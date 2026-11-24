@@ -1,8 +1,9 @@
 import { spawn } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const ROOT = '/Users/wvngbvao483/offcircle_dev/konglie-youdu'
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const OUT = path.join(ROOT, 'qa/mobile')
 fs.mkdirSync(OUT, { recursive: true })
 const URL = process.env.GAME_URL || 'http://127.0.0.1:7101/'
@@ -41,6 +42,11 @@ try {
   await send('Page.navigate', { url: URL }, sessionId); await sleep(1500)
   check('移动端标题无横向溢出', await evaluate(`document.body.scrollWidth===375 && window.innerWidth===375`))
   await screenshot('mobile-title.png')
+  await evaluate(`document.querySelector('.title-actions .primary-button').click()`); await sleep(650)
+  check('出城舞台完整位于375px屏幕内', await evaluate(`(()=>{const r=document.querySelector('.journey-stage').getBoundingClientRect();return r.left>=0 && r.right<=375 && r.top>=0 && r.bottom<=812 && document.body.scrollWidth===375})()`))
+  await screenshot('mobile-prologue.png')
+  await evaluate(`document.querySelector('.journey-skip').click()`); await sleep(250)
+  check('跳过出城进入入山', await evaluate(`!!document.querySelector('.arrival-copy')`))
   await loadLevel('chi')
   check('痴进入里世界', await evaluate(`document.querySelector('.level-screen')?.dataset.phase==='inner'`))
   await send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: 80, y: 360, id: 1 }] }, sessionId)

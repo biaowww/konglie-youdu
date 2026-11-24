@@ -1,0 +1,183 @@
+.journey-screen {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  isolation: isolate;
+  background: #0d0b09;
+}
+
+.journey-stage {
+  --city-opacity: 1;
+  --city-camera: 0%;
+  --city-you-x: 5%;
+  --city-you-y: 68%;
+  --city-you-opacity: 1;
+  --map-opacity: 0;
+  --map-camera: 4%;
+  --map-scale: 1.02;
+  --map-you-x: 12%;
+  --map-you-y: 68%;
+  --map-you-scale: .52;
+  --map-you-opacity: 0;
+  --route-progress: 1;
+  --mountain-opacity: 0;
+  --mountain-scale: 1.02;
+  --mountain-color: 0;
+  --mountain-you-x: 12%;
+  --mountain-you-y: 73%;
+  --mountain-you-scale: .52;
+  --mountain-you-opacity: 0;
+  --jade-signal: 0;
+  position: relative;
+  width: min(100vw, calc(100dvh * 9 / 16));
+  height: min(100dvh, calc(100vw * 16 / 9));
+  overflow: hidden;
+  background: #171916;
+  box-shadow: 0 0 90px rgba(0, 0, 0, .46);
+}
+
+.journey-shot,
+.journey-city-camera,
+.journey-city-veil,
+.journey-map-camera,
+.journey-mountain-camera,
+.journey-mountain-mono,
+.journey-mountain-color,
+.journey-mountain-mist {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.journey-city { opacity: var(--city-opacity); }
+.journey-city-camera {
+  inset: -6% -22%;
+  background: url('/assets/city.webp') center / cover;
+  filter: saturate(.66) contrast(1.04) brightness(.82);
+  transform: translate3d(var(--city-camera), 0, 0) scale(1.08);
+}
+.journey-city-veil {
+  background: linear-gradient(180deg, rgba(23, 25, 22, .08) 35%, rgba(23, 25, 22, .74) 100%);
+}
+
+.journey-you {
+  position: absolute;
+  z-index: 4;
+  width: 54%;
+  pointer-events: none;
+  transform-origin: 50% 92%;
+}
+.journey-you img { display: block; width: 100%; height: auto; }
+.journey-you-city {
+  left: var(--city-you-x);
+  top: var(--city-you-y);
+  opacity: var(--city-you-opacity);
+  transform: translate(-50%, -50%);
+}
+
+.journey-map { opacity: var(--map-opacity); background: #d8d7cc; }
+.journey-map-camera {
+  inset: -10% -38%;
+  background: url('/assets/map.webp') center / cover;
+  filter: grayscale(.7) sepia(.08) contrast(.92) brightness(.76);
+  transform: translate3d(var(--map-camera), 0, 0) scale(var(--map-scale));
+  transform-origin: center;
+}
+.journey-map::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(125deg, rgba(232, 226, 212, .14), rgba(23, 25, 22, .32));
+  pointer-events: none;
+}
+.journey-route { position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; overflow: visible; }
+.journey-route-base,
+.journey-route-travelled { fill: none; vector-effect: non-scaling-stroke; }
+.journey-route-base { stroke: rgba(232, 226, 212, .55); stroke-width: 1.2; stroke-dasharray: 2 3; }
+.journey-route-travelled {
+  stroke: #c4a35a;
+  stroke-width: 2;
+  stroke-dasharray: 1;
+  stroke-dashoffset: var(--route-progress);
+  filter: drop-shadow(0 0 4px rgba(196, 163, 90, .7));
+}
+.journey-place {
+  position: absolute;
+  z-index: 3;
+  padding: 4px 7px;
+  color: #e8e2d4;
+  background: rgba(23, 25, 22, .66);
+  border-left: 1px solid #c4a35a;
+  font-family: 'Songti SC', serif;
+  font-size: 13px;
+  letter-spacing: .12em;
+}
+.journey-place-city { left: 6%; top: 75%; }
+.journey-place-mountain { right: 5%; top: 20%; }
+.journey-you-map {
+  left: var(--map-you-x);
+  top: var(--map-you-y);
+  opacity: var(--map-you-opacity);
+  transform: translate(-50%, -50%) scale(var(--map-you-scale));
+}
+
+.journey-mountain { opacity: var(--mountain-opacity); }
+.journey-mountain-camera {
+  inset: -5%;
+  transform: scale(var(--mountain-scale));
+}
+.journey-mountain-mono {
+  background: url('/assets/mountain-a.webp') center / cover;
+  filter: grayscale(1) brightness(.68) contrast(1.05);
+}
+.journey-mountain-color {
+  background: url('/assets/mountain-a.webp') center / cover;
+  filter: saturate(1.08) brightness(.78);
+  opacity: var(--mountain-color);
+}
+.journey-mountain-mist {
+  background: linear-gradient(165deg, rgba(232, 226, 212, .12), transparent 38%, rgba(23, 25, 22, .5));
+}
+.journey-you-mountain {
+  left: var(--mountain-you-x);
+  top: var(--mountain-you-y);
+  opacity: var(--mountain-you-opacity);
+  transform: translate(-50%, -50%) scale(var(--mountain-you-scale));
+}
+.journey-jade-signal {
+  position: absolute;
+  z-index: 5;
+  left: 57%;
+  top: 45%;
+  width: 14%;
+  opacity: var(--jade-signal);
+  transform: translate(-50%, -50%) scale(calc(.9 + var(--jade-signal) * .2));
+  filter: drop-shadow(0 0 20px rgba(121, 168, 160, .9));
+  pointer-events: none;
+}
+
+.journey-caption {
+  position: absolute;
+  z-index: 8;
+  left: 7%;
+  bottom: 13%;
+  max-width: 84%;
+  text-shadow: 0 2px 16px #171916;
+  pointer-events: none;
+}
+.journey-caption p {
+  margin: 8px 0 0;
+  color: #e8e2d4;
+  font: 500 clamp(20px, 4.8vw, 28px) / 1.55 'Songti SC', serif;
+  letter-spacing: .04em;
+}
+.journey-continue { position: absolute; z-index: 10; right: 7%; bottom: 5%; }
+.journey-skip { position: absolute; z-index: 12; top: max(14px, env(safe-area-inset-top)); right: max(14px, env(safe-area-inset-right)); }
+
+@media (max-width: 760px) {
+  .journey-caption p { font-size: clamp(20px, 6vw, 26px); }
+  .journey-place { font-size: 11px; }
+}

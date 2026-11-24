@@ -5,11 +5,19 @@
       "pass": true
     },
     {
-      "name": "出城漫画第一页",
+      "name": "出城使用24帧分层动画",
       "pass": true
     },
     {
-      "name": "出城漫画第二页",
+      "name": "地图旅行镜头已出现",
+      "pass": true
+    },
+    {
+      "name": "卦山镜头已出现",
+      "pass": true
+    },
+    {
+      "name": "动画自然播放到240帧",
       "pass": true
     },
     {
@@ -21,23 +29,11 @@
       "pass": true
     },
     {
-      "name": "chen 进入正确关卡",
+      "name": "yi 进入正确关卡",
       "pass": true
     },
     {
       "name": "隐对话框使用指定头像",
-      "pass": true
-    },
-    {
-      "name": "chen 进入里世界",
-      "pass": true
-    },
-    {
-      "name": "chen 可完成",
-      "pass": true
-    },
-    {
-      "name": "yi 进入正确关卡",
       "pass": true
     },
     {
@@ -49,19 +45,15 @@
       "pass": true
     },
     {
-      "name": "tan 进入正确关卡",
+      "name": "man 进入正确关卡",
       "pass": true
     },
     {
-      "name": "tan 进入里世界",
+      "name": "man 进入里世界",
       "pass": true
     },
     {
-      "name": "贪背包达到目标回声",
-      "pass": true
-    },
-    {
-      "name": "tan 可完成",
+      "name": "man 可完成",
       "pass": true
     },
     {
@@ -81,15 +73,31 @@
       "pass": true
     },
     {
-      "name": "man 进入正确关卡",
+      "name": "tan 进入正确关卡",
       "pass": true
     },
     {
-      "name": "man 进入里世界",
+      "name": "tan 进入里世界",
       "pass": true
     },
     {
-      "name": "man 可完成",
+      "name": "贪背包达到目标回声",
+      "pass": true
+    },
+    {
+      "name": "tan 可完成",
+      "pass": true
+    },
+    {
+      "name": "chen 进入正确关卡",
+      "pass": true
+    },
+    {
+      "name": "chen 进入里世界",
+      "pass": true
+    },
+    {
+      "name": "chen 可完成",
       "pass": true
     },
     {
@@ -110,16 +118,16 @@
     }
   ],
   "levels": [
-    "chen",
     "yi",
-    "tan",
+    "man",
     "chi",
-    "man"
+    "tan",
+    "chen"
   ],
   "consoleErrors": [],
   "networkErrors": [],
   "requests": 27,
-  "encodedBytes": 3006742,
-  "chiFps": 61,
-  "manFps": 61
+  "encodedBytes": 3391973,
+  "manFps": 54,
+  "chiFps": 60
 }

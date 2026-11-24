@@ -55,14 +55,14 @@ export default function MapScreen({ order, completed, cards, seed, replay, onNex
         )
       })}
 
-      <img className="map-you-icon" src="/assets/you-icon.webp" alt="游当前位置" style={{ left: `${currentPoint.x}%`, top: `${currentPoint.y}%` }} />
+      <img className="map-you-icon" src="./assets/you-icon.webp" alt="游当前位置" style={{ left: `${currentPoint.x}%`, top: `${currentPoint.y}%` }} />
 
       {replay && completed.length > 0 && (
         <div className="route-replay" aria-live="polite">
           <Sparkles size={18} />
           <span>色彩沿着你来时的路，回到山里。</span>
           {MAP_POINTS.slice(1, nextPointIndex).map((point, index) => (
-            <img key={index} src="/assets/you-icon.webp" alt="" className="cat-spirit" style={{ left: `${point.x}%`, top: `${point.y}%`, animationDelay: `${index * 160}ms` }} />
+            <img key={index} src="./assets/you-icon.webp" alt="" className="cat-spirit" style={{ left: `${point.x}%`, top: `${point.y}%`, animationDelay: `${index * 160}ms` }} />
           ))}
         </div>
       )}

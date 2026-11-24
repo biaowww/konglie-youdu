@@ -1,12 +1,15 @@
 from pathlib import Path
-from PIL import Image, ImageOps, ImageDraw
+from PIL import Image, ImageOps, ImageDraw, ImageSequence
 import json
+import os
 
 Image.MAX_IMAGE_PIXELS = None
-DRIVE = Path('/Users/wvngbvao483/Library/CloudStorage/GoogleDrive-wvngbvao483@gmail.com/My Drive/元艺极客和超元')
+if 'YOUDU_DRIVE_ROOT' not in os.environ:
+    raise SystemExit('Set YOUDU_DRIVE_ROOT to the local 元艺极客和超元 directory before preparing assets.')
+DRIVE = Path(os.environ['YOUDU_DRIVE_ROOT'])
 ART = DRIVE / 'ProjectBreach/游戏共创Callab（x甜菜）/03 Art'
 OLD = DRIVE / 'ProjectBreach/游戏共创Callab（x甜菜）/_prototype'
-OUT = Path('/Users/wvngbvao483/offcircle_dev/konglie-youdu/app/public/assets')
+OUT = Path(__file__).resolve().parents[1] / 'app/public/assets'
 OUT.mkdir(parents=True, exist_ok=True)
 
 ASSETS = {
@@ -28,6 +31,7 @@ ASSETS = {
     'statue': (ART / '猫神像(传送门）/神像6.png', 900),
     'du': (ART / '角色和关键道具/渡/游猫.png', 1000),
     'fen-red': (ART / '角色和关键道具/忿-反派/CATCAT30.JPG', 900),
+    'fen-green': (ART / '角色和关键道具/忿-反派/CATCAT24.JPG', 900),
     'card-frame': (ART / '卡牌/卡牌框1.jpg', 900),
     'card-tree': (ART / '卡牌/隐藏元素（世界观展示）/IMG_9748.png', 900),
     'card-dragon': (ART / '卡牌/隐藏元素（世界观展示）/龙pdf.pdf.png', 900),
@@ -50,7 +54,7 @@ def flatten(image, color=(225, 228, 227)):
     return base.convert('RGB')
 
 
-def remove_edge_background(image):
+def remove_edge_background(image, crop=True):
     image = image.convert('RGBA')
     # Flood only from edges: pale blue body details are preserved even when
     # their luminance is close to the paper background.
@@ -65,7 +69,37 @@ def remove_edge_background(image):
         except (ValueError, RuntimeError):
             pass
     bbox = image.getchannel('A').getbbox()
+    return image.crop(bbox) if bbox and crop else image
+
+
+def paper_sprite(image):
+    image = remove_edge_background(image)
+    pixels = image.load()
+    for y in range(image.height):
+        for x in range(image.width):
+            red, green, blue, alpha = pixels[x, y]
+            high = max(red, green, blue)
+            low = min(red, green, blue)
+            luminance = red * .2126 + green * .7152 + blue * .0722
+            paper_light = max(0, min(1, (luminance - 212) / 28))
+            paper_neutral = max(0, min(1, (40 - (high - low)) / 40))
+            pixels[x, y] = (red, green, blue, min(alpha, round(255 * (1 - paper_light * paper_neutral))))
+    alpha = image.getchannel('A').point(lambda value: 0 if value < 10 else value)
+    image.putalpha(alpha)
+    bbox = alpha.getbbox()
     return image.crop(bbox) if bbox else image
+
+
+def ink_frame(image):
+    image = image.convert('RGBA')
+    pixels = image.load()
+    for y in range(image.height):
+        for x in range(image.width):
+            red, green, blue, _ = pixels[x, y]
+            luminance = round(red * .2126 + green * .7152 + blue * .0722)
+            alpha = max(0, min(210, (198 - luminance) * 5))
+            pixels[x, y] = (232, 224, 208, alpha)
+    return image
 
 
 manifest = {'sourceRoot': str(ART), 'assets': {}, 'missing': []}
@@ -80,6 +114,10 @@ for name, (source, max_size) in ASSETS.items():
         image = flatten(image)
     elif name == 'du':
         image = remove_edge_background(image)
+    elif name in {'fen-red', 'fen-green'}:
+        image = paper_sprite(image)
+    elif name == 'card-frame':
+        image = ink_frame(image)
     if name == 'you-walk-gif':
         target = OUT / f'{name}.gif'
         target.write_bytes(source.read_bytes())
@@ -93,5 +131,26 @@ for name, (source, max_size) in ASSETS.items():
         'size': image.size, 'bytes': target.stat().st_size,
     }
 
-(OUT / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding='utf-8')
-print(json.dumps({'exported': len(manifest['assets']), 'missing': manifest['missing'], 'out': str(OUT)}, ensure_ascii=False, indent=2))
+walk_source = OLD / '01_character_art/animation/walk_24/you_walk_24.gif'
+if walk_source.exists():
+    walk_frames = []
+    walk_durations = []
+    with Image.open(walk_source) as walk:
+        for frame in ImageSequence.Iterator(walk):
+            walk_frames.append(remove_edge_background(frame, crop=False))
+            walk_durations.append(frame.info.get('duration', 40))
+    walk_target = OUT / 'you-walk-alpha.webp'
+    walk_frames[0].save(
+        walk_target, 'WEBP', save_all=True, append_images=walk_frames[1:],
+        duration=walk_durations, loop=0, quality=84, method=6,
+    )
+    manifest['assets']['you-walk-alpha'] = {
+        'source': str(walk_source), 'file': walk_target.name,
+        'originalSize': walk_frames[0].size, 'size': walk_frames[0].size,
+        'bytes': walk_target.stat().st_size, 'frames': len(walk_frames),
+        'status': 'AI-assisted test animation; background removed; not cleaned production art',
+    }
+
+manifest_path = OUT.parent.parent / 'art-manifest.json'
+manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding='utf-8')
+print(json.dumps({'exported': len(manifest['assets']), 'missing': manifest['missing'], 'out': str(OUT), 'manifest': str(manifest_path)}, ensure_ascii=False, indent=2))

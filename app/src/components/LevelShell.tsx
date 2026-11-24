@@ -71,14 +71,14 @@ export default function LevelShell({ level, onComplete, onExit }: Props) {
       {phase === 'outer' && (
         <>
           <div className="floating-level-words" aria-hidden="true">{Array.from({ length: 8 }, (_, index) => <span key={index} style={{ left: `${12 + (index % 4) * 23}%`, top: `${20 + Math.floor(index / 4) * 34}%`, animationDelay: `${-index}s` }}>{level.name}</span>)}</div>
-          <img className="level-statue" src="/assets/statue.webp" alt="古老猫神像" />
-          <img className="level-you-back" src="/assets/you-back.webp" alt="游望向神像" />
-          <img className="level-jade" src="/assets/jade.webp" alt="玉佩正在感应" />
+          <img className="level-statue" src="./assets/statue.webp" alt="古老猫神像" />
+          <img className="level-you-back" src="./assets/you-back.webp" alt="游望向神像" />
+          <img className="level-jade" src="./assets/jade.webp" alt="玉佩正在感应" />
           <button type="button" className="statue-hotspot" onClick={enterInner} aria-label={`触碰猫神像，进入${level.name}的里世界`}><span className="statue-ring" /><span className="statue-label">触碰猫神像</span></button>
         </>
       )}
 
-      {phase === 'transition' && <div className="level-transition" aria-live="polite"><img src="/assets/jade.webp" alt="" /><p>玉佩正在打开里世界</p></div>}
+      {phase === 'transition' && <div className="level-transition" aria-live="polite"><img src="./assets/jade.webp" alt="" /><p>玉佩正在打开里世界</p></div>}
 
       {phase === 'inner' && (
         <>
@@ -88,7 +88,7 @@ export default function LevelShell({ level, onComplete, onExit }: Props) {
         </>
       )}
 
-      {fenVisible && phase === 'inner' && <div className={`fen-interference fen-${level.id}`}><img src="/assets/fen-red.webp" alt="忿出现干扰" /><p>{fenLine}</p></div>}
+      {fenVisible && phase === 'inner' && <div className={`fen-interference fen-${level.id}`}><img src="./assets/fen-red.webp" alt="忿出现干扰" /><p>{fenLine}</p></div>}
 
       {phase === 'complete' && (
         <div className="level-complete">
