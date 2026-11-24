@@ -1,0 +1,52 @@
+/* 四格漫画 + 开始界面：对照四张原画校准后的版式与动效位置。
+   在 styles.css 之后载入，覆盖其中的初始占位值。
+   位置依据 qa/art-reboot/report.json 里的原画墨量/彩度网格（artMaps）
+   与 verify.mjs 的“文字身下着墨比例”实测得出，尚未经人眼逐项确认；
+   换原画后需重新校准。 */
+.fable-stage {
+  /* ② 864×1536：上方约 38% 是留白；深色主体（游）在 x40–85% y40–92%；左下 x5–35% y80–91% 为信堆 */
+  --p2-cat-x: 62%; --p2-cat-y: 66%;
+  --p2-letter-clip: inset(79% 63% 8% 4%); --p2-letter-origin: 36% 92%;
+  /* ③ 1024×1024：左下是包带与毛，右上留白；彩度峰值（玉玦）约在原图 (35%, 77%) */
+  --p3-jade-x: 33%; --p3-jade-y: 76%;
+  /* ④ 864×1536：左上 x12–50% y0–27% 与右下 x70–100% y68–100% 是留白；深色主体（游）在左下 */
+  --p4-summit-x: 82%; --p4-summit-y: 3.5%;
+  --c4-left: 73%; --c4-top: 68%;
+  --title-left: 17%; --title-top: 3.5%;
+  --seal-left: 71%; --seal-top: 74%;
+}
+
+/* 原画纸白与舞台纸色相乘，画格不出现方框边界。
+   带 transform/opacity 的容器会自成混合层，所以各层都垫同一张纸色。 */
+.fable-base { mix-blend-mode: multiply; }
+.fable-art, .p3-sway, .fable-scroll { background: #f4f2ed; }
+
+/* ① 横长条：保留原画上部山体，裁掉底部空白；文字写在画内右下留白 */
+.fable-p1 .fable-base { object-position: 50% 0; }
+.fable-c1 { left: auto; right: 2%; top: auto; bottom: -3cqw; }
+
+/* ② 竖窄条：整幅 9:16 不裁切，文字从纸上落进画内上方留白 */
+.fable-p2 { left: 4%; top: 44%; width: 46%; height: auto; aspect-ratio: 9 / 16; }
+.fable-c2 { left: 52%; top: -17cqw; }
+
+/* ③ 斜切格：文字自右上纸面落进画内右上留白 */
+.fable-p3 { left: 52%; top: 54%; width: 44%; height: 30%; }
+.fable-c3 { right: 1cqw; bottom: auto; top: -22cqw; }
+.fable-c3 span + span + span { padding-top: 0; }
+
+/* ① 退色：只让身下的点触变淡 */
+.p1-grain { backdrop-filter: grayscale(1) brightness(1.2); -webkit-backdrop-filter: grayscale(1) brightness(1.2); }
+
+/* ④ 竖卷：起于左下的游，沿山势斜上到右上山顶，再退回全卷停稳 */
+.fable-scroll { transform-origin: 20% 100%; }
+@keyframes fable-scroll-rise {
+  0%, 10% { transform: translate(0, 0) scale(1.5); }
+  40% { transform: translate(-28%, 24%) scale(1.5); }
+  68% { transform: translate(-40%, 50%) scale(1.5); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+/* 开始界面：标题两列错落写在左上留白；重看漫画移到右下留白 */
+.fable-title h1 span { display: block; white-space: nowrap; }
+.fable-title h1 span + span { padding-top: 1em; }
+.fable-replay { left: auto; right: 3%; }

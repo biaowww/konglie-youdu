@@ -2,7 +2,7 @@
 
 ## 结果在哪里看
 
-1. **代码与提交**：`https://github.com/biaowww/konglie-youdu/tree/art-reboot-claude`。当前只有交接材料，Fable 的开发结果以新提交为准。
+1. **代码与提交**：`https://github.com/biaowww/konglie-youdu/tree/art-reboot-claude`。已包含美术导演方案和“漫画＋开始界面”阶段 playable；痴关卡尚未完成。
 2. **本地／服务器 playable**：Fable 应提供 `art-reboot.html` 的预览地址、端口、截图和提交 hash。不要只接受图片或文档。
 3. **美术小样**：G Drive `03 Art/AI生成资产/claude/`，先审小样，再允许批量生成。
 4. **公开 URL**：当前仍是旧 V1，Fable 尚未通过前不要替换。验收通过后再单独配置预览发布。
@@ -137,6 +137,11 @@ http://127.0.0.1:7106/art-reboot.html
 ```
 
 如果 Fable 使用其他端口，将两端端口号一起替换。不要默认开放服务器公网端口，优先 SSH 隧道。
+
+## 当前验收与阻塞
+
+- 漫画阶段 build、lint 与真实 Chrome 验收通过，共 86 项检查；桌面、375px 触摸、控制台错误与失败资源均通过。
+- 痴关卡尚未开始替换。OpenRouter 专用 Key 已达到每日限额，未换 Key、未擅自提额；额度恢复后继续。
 
 ## 0→1 验收门槛
 
