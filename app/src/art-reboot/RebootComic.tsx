@@ -4,10 +4,10 @@ import { ArrowRight, SkipForward } from 'lucide-react'
 type Props = { onComplete: () => void }
 
 const PANELS = [
-  { kicker: '01 · 空裂之后', text: '城市还在，颜色却先离开了。' },
-  { kicker: '02 · 出城', text: '游只带上一枚玉玦。' },
-  { kicker: '03 · 归途', text: '它要回卦山，寻找主人。' },
-  { kicker: '04 · 入山', text: '山把回答藏起来了。' },
+  { kicker: '01 · 世界', text: '空裂之后，城市与人都被情绪隔开。' },
+  { kicker: '02 · 游', text: '主人说不出的情绪，留在了这只猫身上。' },
+  { kicker: '03 · 归途', text: '游沿着玉玦的回应回卦山，寻找主人。' },
+  { kicker: '04 · 痴', text: '先看清三个“痴”，让古寺复色，才能继续向前。' },
 ]
 
 export default function RebootComic({ onComplete }: Props) {
@@ -25,10 +25,7 @@ export default function RebootComic({ onComplete }: Props) {
             return (
               <article key={panel.kicker} className={`comic-panel comic-panel-${index} ${visible ? 'is-visible' : ''}`} aria-hidden={!visible}>
                 <div className="comic-panel-art">
-                  {index < 3 ? <img className="comic-city" src="./assets/art-reboot/city.webp" alt="位面城与出城道路" /> : <img className="comic-temple" src="./assets/art-reboot/temple.webp" alt="山腰古寺" />}
-                  {index === 1 && <img className="comic-you" src="./assets/art-reboot/you.webp" alt="自然猫游" />}
-                  {index === 2 && <div className="comic-route"><i /><span>位面城</span><span>卦山</span></div>}
-                  {index === 3 && <img className="comic-statue" src="./assets/art-reboot/statue.webp" alt="猫神像" />}
+                  <img className={`comic-shot comic-shot-${index}`} src={`./assets/art-reboot/cinematic/comic-0${index + 1}.webp`} alt={panel.text} />
                 </div>
                 <div className="comic-caption"><span>{panel.kicker}</span><p>{panel.text}</p></div>
               </article>

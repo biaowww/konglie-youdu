@@ -11,7 +11,7 @@ button:focus-visible { outline: 2px solid #d2af6a; outline-offset: 3px; }
 .reboot-text-link { display: inline-flex; align-items: center; gap: 6px; padding: 8px; color: #d8cdb9; background: transparent; border: 0; cursor: pointer; }
 
 .reboot-title { position: relative; width: min(100vw, calc(100dvh * 9 / 16)); height: min(100dvh, calc(100vw * 16 / 9)); overflow: hidden; isolation: isolate; background: #5d665f; }
-.reboot-title-scene { position: absolute; inset: -4%; z-index: -1; background: url('/assets/art-reboot/temple.webp') center / cover; filter: saturate(.78) brightness(.68); animation: reboot-scene-drift 18s steps(4, end) infinite alternate; }
+.reboot-title-scene { position: absolute; inset: -4%; z-index: -1; width: 108%; height: 108%; object-fit: cover; filter: saturate(.78) brightness(.68); animation: reboot-scene-drift 18s steps(4, end) infinite alternate; }
 .reboot-title::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(165deg, rgba(32, 35, 31, .08), rgba(32, 35, 31, .72)); pointer-events: none; }
 .reboot-title-cat { position: absolute; left: -4%; bottom: -2%; width: 64%; pointer-events: none; animation: reboot-breathe 5s steps(3, end) infinite; }
 .reboot-title-cat img, .reboot-title-statue img { display: block; width: 100%; }
@@ -57,7 +57,7 @@ button:focus-visible { outline: 2px solid #d2af6a; outline-offset: 3px; }
 
 .reboot-chi { position: relative; width: min(100vw, calc(100dvh * 9 / 16)); height: min(100dvh, calc(100vw * 16 / 9)); overflow: hidden; isolation: isolate; background: #667068; }
 .reboot-chi-scene, .reboot-chi-atmosphere { position: absolute; inset: 0; pointer-events: none; }
-.reboot-chi-scene { inset: -4%; background: url('/assets/art-reboot/temple.webp') center / cover; filter: grayscale(.82) brightness(.72); transition: filter 1.2s ease; animation: reboot-scene-drift 20s steps(4, end) infinite alternate; }
+.reboot-chi-scene { inset: -4%; width: 108%; height: 108%; object-fit: cover; filter: grayscale(.82) brightness(.72); transition: filter 1.2s ease; animation: reboot-scene-drift 20s steps(4, end) infinite alternate; }
 .reboot-phase-inner .reboot-chi-scene, .reboot-phase-complete .reboot-chi-scene { filter: grayscale(.18) saturate(.88) brightness(.7); }
 .reboot-phase-complete .reboot-chi-scene { filter: grayscale(0) saturate(1.05) brightness(.8); }
 .reboot-chi-atmosphere { z-index: 1; background: linear-gradient(160deg, rgba(233, 226, 211, .04), rgba(32, 35, 31, .14) 48%, rgba(32, 35, 31, .62)); }
@@ -71,11 +71,12 @@ button:focus-visible { outline: 2px solid #d2af6a; outline-offset: 3px; }
 .reboot-ui-wide { width: 68px; }
 .reboot-you { position: absolute; z-index: 4; left: -4%; bottom: -3%; width: 63%; pointer-events: none; animation: reboot-breathe 5s steps(3, end) infinite; }
 .reboot-you img { display: block; width: 100%; }
-.reboot-statue { position: absolute; z-index: 6; right: -4%; top: 17%; width: 62%; padding: 0; background: transparent; border: 0; cursor: pointer; animation: reboot-statue-breathe 5.5s steps(3, end) infinite; }
-.reboot-statue img { display: block; width: 100%; filter: drop-shadow(0 0 16px rgba(210, 175, 106, .2)); }
-.reboot-statue span { position: absolute; right: 15%; bottom: 5%; padding: 6px 9px; color: #e9e2d3; background: rgba(32, 35, 31, .76); border-left: 2px solid #d2af6a; font-size: 11px; letter-spacing: .1em; }
+.reboot-statue { position: absolute; z-index: 6; right: 3%; top: 19%; width: 42%; height: 36%; padding: 0; background: transparent; border: 0; cursor: pointer; }
+.reboot-statue::before { content: ''; position: absolute; inset: 12% 8% 18%; border: 1px solid rgba(210, 175, 106, .58); border-radius: 48% 52% 44% 56%; animation: reboot-statue-ring 2.8s steps(4, end) infinite; }
+.reboot-statue span { position: absolute; right: 12%; bottom: 2%; padding: 6px 9px; color: #e9e2d3; background: rgba(32, 35, 31, .76); border-left: 2px solid #d2af6a; font-size: 11px; letter-spacing: .1em; }
+@keyframes reboot-statue-ring { from { opacity: .72; transform: scale(.88); } to { opacity: 0; transform: scale(1.16); } }
 .reboot-transition { position: absolute; z-index: 15; left: 50%; top: 31%; display: grid; justify-items: center; transform: translateX(-50%); }
-.reboot-transition img { width: 130px; animation: reboot-transition-statue 1.25s steps(3, end) both; }
+.reboot-transition i { width: 92px; height: 92px; border: 1px solid #d2af6a; border-radius: 48% 52% 46% 54%; box-shadow: 0 0 22px rgba(210, 175, 106, .28); animation: reboot-transition-statue 1.25s steps(3, end) both; }
 .reboot-transition span { margin-top: 12px; font: 500 18px 'Songti SC', serif; letter-spacing: .18em; }
 @keyframes reboot-transition-statue { from { opacity: 0; transform: scale(.7); filter: blur(8px); } to { opacity: 1; transform: scale(1); filter: blur(0); } }
 .reboot-chi .puzzle-canvas { position: absolute; inset: 0; z-index: 6; width: 100%; height: 100%; touch-action: none; cursor: crosshair; }
@@ -84,7 +85,11 @@ button:focus-visible { outline: 2px solid #d2af6a; outline-offset: 3px; }
 .reboot-lamp img { display: block; width: 100%; }
 .reboot-lamp.is-out { opacity: .13; filter: grayscale(1); pointer-events: none; }
 @keyframes reboot-lamp-sway { 50% { margin-top: -7px; transform: rotate(1.5deg); } }
-.reboot-progress { position: absolute; z-index: 12; left: 4%; top: 15%; display: flex; align-items: center; gap: 7px; color: #e9e2d3; font-size: 11px; }
+.reboot-objective { position: absolute; z-index: 12; left: 4%; top: 12%; max-width: 70%; padding: 7px 10px; background: rgba(32, 35, 31, .58); border-left: 2px solid #d2af6a; }
+.reboot-objective > span { color: #d2af6a; font-size: 10px; letter-spacing: .16em; }
+.reboot-objective p { margin: 3px 0 0; color: #e9e2d3; font-size: 12px; line-height: 1.5; }
+.reboot-objective small { display: block; margin-top: 4px; color: #c9bdab; font-size: 10px; }
+.reboot-progress { position: absolute; z-index: 12; left: 4%; top: 21%; display: flex; align-items: center; gap: 7px; color: #e9e2d3; font-size: 11px; }
 .reboot-progress i { width: 8px; height: 8px; border: 1px solid #d2af6a; border-radius: 50%; }
 .reboot-progress i.is-found { background: #d2af6a; box-shadow: 0 0 8px rgba(210, 175, 106, .75); }
 .reboot-progress strong { color: #d2af6a; font-weight: 400; }

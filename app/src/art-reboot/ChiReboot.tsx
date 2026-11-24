@@ -16,7 +16,7 @@ const FEN_LINES = ['忿：光越多，越看不清。', '忿：玉玦认得你�
 export default function ChiReboot({ onExit }: Props) {
   const [phase, setPhase] = useState<Phase>('outer')
   const [found, setFound] = useState(0)
-  const [guide, setGuide] = useState('先靠近神像。别急着相信眼前的灯。')
+  const [guide, setGuide] = useState('神像把三处“痴”藏在失真的地方。找齐它们，古寺才会复色，你才能继续找主人。')
   const [hintSignal, setHintSignal] = useState(0)
   const [resetKey, setResetKey] = useState(0)
   const [fenEpisode, setFenEpisode] = useState(0)
@@ -47,7 +47,7 @@ export default function ChiReboot({ onExit }: Props) {
   const reset = () => {
     setPhase('outer')
     setFound(0)
-    setGuide('先靠近神像。别急着相信眼前的灯。')
+    setGuide('神像把三处“痴”藏在失真的地方。找齐它们，古寺才会复色，你才能继续找主人。')
     setFenEpisode(0)
     setLampCount(7)
     setExtinguished([])
@@ -59,7 +59,7 @@ export default function ChiReboot({ onExit }: Props) {
   return (
     <main className="reboot-shell">
       <section className={`reboot-chi reboot-phase-${phase}`} data-phase={phase} aria-label="痴关卡独立统一美术原型">
-        <div className="reboot-chi-scene" />
+        <img className="reboot-chi-scene" src={`./assets/art-reboot/cinematic/scene-${phase === 'complete' ? 'complete' : phase === 'inner' ? 'inner' : 'outer'}.webp`} alt={phase === 'outer' || phase === 'transition' ? '游在低位斜侧的石阶上望向神像' : phase === 'inner' ? '斜俯视灯海中的游与神像' : '游与神像在复色古寺中近景相对'} />
         <div className="reboot-chi-atmosphere" />
         <header className="reboot-chi-header">
           <div><span className="reboot-kicker">美术原型 02 · 山腰古寺</span><h1>痴</h1><small>{suffix === 'outer' ? '表世界 · 失焦' : '里世界 · 灯海'}</small></div>
@@ -76,16 +76,19 @@ export default function ChiReboot({ onExit }: Props) {
           </div>
         </header>
 
-        <div className="reboot-you"><img src="./assets/art-reboot/you.webp" alt="自然形态的游与颈间玉玦" /></div>
+        <div className="reboot-objective">
+          <span>目标</span>
+          <p>{phase === 'outer' || phase === 'transition' ? '触碰神像，看清失真' : phase === 'inner' ? '找齐 3 个“痴”，让古寺复色，继续寻找主人' : '3 / 3 已找齐，继续寻找主人'}</p>
+          {phase === 'inner' && found === 0 && <small>移动光圈，找到“痴”后点一下</small>}
+        </div>
 
         {phase === 'outer' && (
           <button type="button" className="reboot-statue" onClick={() => { setPhase('transition'); audio.play('switch') }} aria-label="触碰猫神像">
-            <img src="./assets/art-reboot/statue.webp" alt="完整石质猫神像" />
             <span>触碰神像</span>
           </button>
         )}
 
-        {phase === 'transition' && <div className="reboot-transition"><img src="./assets/art-reboot/statue.webp" alt="" /><span>表里之间</span></div>}
+        {phase === 'transition' && <div className="reboot-transition"><i /><span>表里之间</span></div>}
 
         {(phase === 'inner' || phase === 'complete') && (
           <>
@@ -115,7 +118,7 @@ export default function ChiReboot({ onExit }: Props) {
         )}
 
         {phase === 'complete' && (
-          <div className="reboot-complete" role="status"><span className="reboot-kicker">局部复色 · 痴</span><h2>看清，不等于找到答案。<br />只是终于不再误认。</h2><button type="button" className="reboot-primary" onClick={onExit}>返回开始界面</button></div>
+          <div className="reboot-complete" role="status"><span className="reboot-kicker">局部复色 · 痴</span><h2>看清，不等于找到答案。<br />只是终于不再误认。</h2><button type="button" className="reboot-primary" onClick={onExit}>继续寻找主人</button></div>
         )}
 
         <aside className="reboot-guide" aria-live="polite"><img src="./assets/art-reboot/yin.webp" alt="隐" /><div><span>隐</span><p>{guide}</p></div></aside>

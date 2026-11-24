@@ -14,9 +14,7 @@ export default function ArtRebootApp() {
   return (
     <main className="reboot-shell">
       <section className="reboot-title" aria-label="空裂游渡开始界面">
-        <div className="reboot-title-scene" />
-        <div className="reboot-title-cat"><img src="./assets/art-reboot/you.webp" alt="颈挂玉玦的自然猫游" /></div>
-        <div className="reboot-title-statue"><img src="./assets/art-reboot/statue.webp" alt="古老猫神像" /></div>
+        <img className="reboot-title-scene" src="./assets/art-reboot/cinematic/scene-outer.webp" alt="游在低位斜侧的石阶上望向神龛中的猫神像" />
         <div className="reboot-title-copy">
           <span className="reboot-kicker">独立统一美术原型 · 山腰古寺</span>
           <h1>空裂：游渡</h1>

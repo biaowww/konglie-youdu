@@ -46,6 +46,18 @@ for row, suffix in enumerate(['outer', 'inner']):
         icon.save(target, 'WEBP', quality=90, method=6)
         manifest['assets'][f'ui-{name}-{suffix}'] = {'source': 'ui_sheet_v1', 'cell': [column, row], 'outputSize': icon.size, 'bytes': target.stat().st_size}
 
+cinematic_out = OUT / 'cinematic'
+cinematic_out.mkdir(exist_ok=True)
+for key in ['scene-outer', 'scene-inner', 'scene-complete', 'comic-01', 'comic-02', 'comic-03', 'comic-04']:
+    source = CANDIDATES / 'comparisons' / f'gpt-{key}-ink-v1.png'
+    if not source.exists():
+        raise FileNotFoundError(source)
+    image = Image.open(source).convert('RGBA')
+    image.thumbnail((1920, 1920), Image.Resampling.LANCZOS)
+    target = cinematic_out / f'{key}.webp'
+    image.save(target, 'WEBP', quality=88, method=6)
+    manifest['assets'][key] = {'source': source.name, 'outputSize': image.size, 'bytes': target.stat().st_size}
+
 manifest_path = OUT.parent.parent.parent / 'art-reboot-manifest.json'
 manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding='utf-8')
 print(json.dumps({'exported': len(manifest['assets']), 'out': str(OUT)}, ensure_ascii=False))
