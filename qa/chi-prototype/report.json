@@ -1,0 +1,54 @@
+{
+  "checks": [
+    {
+      "name": "标题可进入痴原型",
+      "pass": true
+    },
+    {
+      "name": "自然猫与神像 sprite 已加载",
+      "pass": true
+    },
+    {
+      "name": "神像切换进入里世界",
+      "pass": true
+    },
+    {
+      "name": "灯海与探灯同时存在",
+      "pass": true
+    },
+    {
+      "name": "表头未被场景裁切",
+      "pass": true
+    },
+    {
+      "name": "幻境灯可被识别为干扰",
+      "pass": true
+    },
+    {
+      "name": "忿出现并增加灯海",
+      "pass": true
+    },
+    {
+      "name": "三个痴均可点击并完成",
+      "pass": true
+    },
+    {
+      "name": "375px 触摸可收集一个痴",
+      "pass": true
+    },
+    {
+      "name": "移动端原型无横向溢出",
+      "pass": true
+    },
+    {
+      "name": "无控制台错误",
+      "pass": true
+    },
+    {
+      "name": "无失败资源",
+      "pass": true
+    }
+  ],
+  "consoleErrors": [],
+  "networkErrors": []
+}

@@ -8,6 +8,15 @@
 
 V1 已将出城升级为三镜旅行测试版，并完成原画透明 sprite 与卡牌框分层。尚未完成多路线 DAG、疑／贪／嗔／慢的新机制、忿的完整伏笔和主人—猫重逢；这些仍是下一阶段 P0，不应把当前完整流程当作新需求全部完成。
 
+## 1.1 chi-polish 原型进展
+
+- 标题页可直接进入痴美术与交互原型：`app/src/prototype/ChiPrototype.tsx`。包含自然猫、颈挂玉玦、神像 sprite、灯海、忿两次场景侵入、隐对话和表里 UI。
+- `tools/prepare_chi_assets.py` 独立生成原型资产到 `app/public/assets/chi/`，个人路径清单 `app/chi-art-manifest.json` 已忽略公开。
+- `app/src/game/route.ts` 与 `app/src/components/RouteMap.tsx` 实现四层多路线：第一层主题、第二层歇脚、第三层主题、第四层主题，然后到达山顶。
+- 每条路线天然为三关加一次歇脚，支持缩放、拖动和真实路径复色；`RestScreen` 的两种歇脚提供不同叙事反馈。
+- 旧 `MapScreen` 保留作历史参考，不再接入主流程。疑／贪／嗔／慢的玩法改造和主人—猫结局仍未完成。
+- 并行开发与 ChatGPT 独立美术分支的边界见 `docs/ART_REBOOT_COLLABORATION.md`。
+
 ## 2. 设计优先级
 
 1. `02 GDD/空裂：游渡-主GDD.docx`

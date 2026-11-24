@@ -1,0 +1,14 @@
+.rest-screen { position: relative; width: 100%; height: 100dvh; overflow: hidden; isolation: isolate; background: #171916; }
+.rest-landscape { position: absolute; inset: -4%; z-index: -1; background: url('/assets/mountain-b.webp') 65% center / cover; filter: grayscale(.8) brightness(.65); transition: filter 1.4s ease; }
+.rest-screen.is-rested .rest-landscape { filter: grayscale(.15) saturate(.9) brightness(.78); }
+.rest-you { position: absolute; left: 8%; bottom: 0; width: min(42vw, 420px); pointer-events: none; }
+.rest-you > img:first-child { display: block; width: 100%; }
+.rest-you > img:last-child { position: absolute; left: 47%; top: 35%; width: 14%; filter: drop-shadow(0 0 12px rgba(128, 168, 157, .8)); }
+.rest-copy { position: absolute; right: 7%; top: 22%; width: min(520px, 52%); padding: 26px 0 26px 24px; background: linear-gradient(105deg, rgba(13, 11, 9, .78), transparent); border-left: 1px solid #c4a35a; }
+.rest-copy h2 { margin: 16px 0; font: 500 clamp(30px, 4vw, 46px)/1.4 'Songti SC', serif; }
+.rest-copy p { max-width: 28em; margin: 0 0 22px; color: #d0c6b5; font-size: 15px; line-height: 1.9; }
+@media (max-width: 760px) {
+  .rest-you { left: -8%; width: 72vw; opacity: .8; }
+  .rest-copy { right: 5%; top: 15%; width: 86%; }
+  .rest-copy h2 { font-size: 30px; }
+}

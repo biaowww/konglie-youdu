@@ -1,0 +1,79 @@
+{
+  "choice": "last",
+  "checks": [
+    {
+      "name": "入山按钮出现",
+      "pass": true
+    },
+    {
+      "name": "四层路线与山顶共10个节点",
+      "pass": true
+    },
+    {
+      "name": "起点有两个有效候选",
+      "pass": true
+    },
+    {
+      "name": "地图可放大",
+      "pass": true
+    },
+    {
+      "name": "地图可拖动平移",
+      "pass": true
+    },
+    {
+      "name": "yi可完成",
+      "pass": true
+    },
+    {
+      "name": "chen可完成",
+      "pass": true
+    },
+    {
+      "name": "chi可完成",
+      "pass": true
+    },
+    {
+      "name": "路线可到达最终结局",
+      "pass": true
+    },
+    {
+      "name": "每局恰好三个主题关卡",
+      "pass": true
+    },
+    {
+      "name": "每局恰好一次歇脚",
+      "pass": true
+    },
+    {
+      "name": "实际路径记录为起点加四段",
+      "pass": true
+    },
+    {
+      "name": "375px 多路线地图无横向溢出",
+      "pass": true
+    },
+    {
+      "name": "无控制台错误",
+      "pass": true
+    },
+    {
+      "name": "无失败资源",
+      "pass": true
+    }
+  ],
+  "levels": [
+    "yi",
+    "chen",
+    "chi"
+  ],
+  "routePath": [
+    "city",
+    "l1-b",
+    "l2-rest-b",
+    "l3-b",
+    "l4-b"
+  ],
+  "consoleErrors": [],
+  "networkErrors": []
+}

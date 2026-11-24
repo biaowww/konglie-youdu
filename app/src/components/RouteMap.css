@@ -1,0 +1,43 @@
+.route-map-screen { position: relative; width: 100%; height: 100dvh; overflow: hidden; isolation: isolate; background: #171916; }
+.route-map-viewport { position: absolute; inset: 0; overflow: hidden; touch-action: none; cursor: grab; }
+.route-map-viewport:active { cursor: grabbing; }
+.route-map-world { position: absolute; inset: 0; transform-origin: center; will-change: transform; transition: filter 700ms ease; }
+.route-map-landscape { position: absolute; inset: -5%; background: url('/assets/map.webp') center / cover; }
+.route-map-viewport::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(13, 11, 9, .55), transparent 32%, rgba(13, 11, 9, .42)); }
+.route-map-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.route-edge { stroke: rgba(232, 224, 208, .52); stroke-width: 1.1; stroke-dasharray: 4 3; vector-effect: non-scaling-stroke; }
+.route-travelled { fill: none; stroke: #c4a35a; stroke-width: 1.5; vector-effect: non-scaling-stroke; filter: drop-shadow(0 0 4px rgba(196, 163, 90, .65)); }
+.route-node { position: absolute; z-index: 5; display: flex; align-items: center; gap: 5px; min-width: 46px; min-height: 46px; padding: 0; transform: translate(-50%, -50%); color: #e8e0d0; background: transparent; border: 0; text-align: left; }
+.route-node-dot { display: grid; place-items: center; flex: 0 0 auto; width: 38px; height: 38px; border-radius: 50%; color: #c9bca6; background: rgba(13, 11, 9, .82); border: 1px solid rgba(232, 224, 208, .4); font: 500 15px 'Songti SC', serif; }
+.route-node-label { display: flex; flex-direction: column; padding: 3px 6px; background: rgba(13, 11, 9, .64); border-radius: 2px; white-space: nowrap; text-shadow: 0 1px 6px #0d0b09; }
+.route-node-label strong { font-size: 10px; font-weight: 400; }
+.route-node-label small { color: #c4a35a; font-size: 9px; }
+.route-node.is-complete .route-node-dot { color: #18110b; background: #9fc9b4; border-color: #9fc9b4; }
+.route-node.is-next .route-node-dot { color: #18110b; background: #c4a35a; border-color: #f0dca0; box-shadow: 0 0 0 7px rgba(196, 163, 90, .13), 0 0 20px rgba(196, 163, 90, .45); animation: route-next-pulse 2.2s ease-in-out infinite; }
+.route-node.is-next:hover .route-node-dot { transform: scale(1.08); }
+.route-node.is-next .route-node-label { border-left: 1px solid #c4a35a; }
+.route-kind-start .route-node-dot, .route-kind-summit .route-node-dot { border-radius: 12%; }
+@keyframes route-next-pulse { 50% { box-shadow: 0 0 0 11px rgba(196, 163, 90, .04), 0 0 26px rgba(196, 163, 90, .55); } }
+.route-you-icon { position: absolute; z-index: 7; width: 48px; height: 48px; object-fit: cover; border: 2px solid #f0dca0; border-radius: 50%; transform: translate(-50%, -155%); box-shadow: 0 4px 18px rgba(13, 11, 9, .5); pointer-events: none; transition: left 600ms ease, top 600ms ease; }
+.route-cat-spirit { position: absolute; z-index: 6; width: 30px; height: 30px; object-fit: cover; border-radius: 50%; opacity: 0; filter: brightness(.3); pointer-events: none; animation: route-spirit 1.8s ease both; }
+@keyframes route-spirit { 20%, 65% { opacity: .8; } 100% { opacity: 0; } }
+.route-map-title { position: absolute; z-index: 10; top: 3%; left: 4%; pointer-events: none; text-shadow: 0 2px 14px #0d0b09; }
+.route-map-title h2 { margin: 7px 0 4px; font: 500 clamp(27px, 4vw, 44px) 'Songti SC', serif; }
+.route-map-title p { margin: 0; color: #c9bca6; font-size: 12px; }
+.route-map-tools { position: absolute; z-index: 12; right: 3%; bottom: 9%; display: flex; gap: 6px; }
+.route-map-footer { position: absolute; z-index: 12; left: 3%; right: 3%; bottom: 2.5%; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.route-map-footer > span { color: #c9bca6; font-size: 10px; text-shadow: 0 1px 6px #0d0b09; }
+.route-replay-note { position: absolute; z-index: 11; top: 18%; left: 50%; display: flex; align-items: center; gap: 8px; transform: translateX(-50%); padding: 8px 12px; color: #f0dca0; background: rgba(13, 11, 9, .62); pointer-events: none; animation: route-note-fade 2.7s ease both; }
+.route-replay-note span { font-size: 12px; white-space: nowrap; }
+@keyframes route-note-fade { 0%, 100% { opacity: 0; } 15%, 72% { opacity: 1; } }
+@media (max-width: 760px) {
+  .route-map-title { top: 2.5%; }
+  .route-map-title h2 { font-size: 26px; }
+  .route-node-dot { width: 32px; height: 32px; font-size: 13px; }
+  .route-node-label strong { font-size: 9px; }
+  .route-node-label small { font-size: 8px; }
+  .route-you-icon { width: 38px; height: 38px; }
+  .route-map-tools { bottom: 11%; }
+  .route-map-footer { bottom: 2%; }
+  .route-map-footer > span { max-width: 62%; line-height: 1.5; }
+}

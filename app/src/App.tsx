@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
-import { Play, RotateCcw, Volume2, VolumeX, X } from 'lucide-react'
-import MapScreen from './components/MapScreen'
+import { Eye, Play, RotateCcw, Volume2, VolumeX, X } from 'lucide-react'
+import RouteMap from './components/RouteMap'
 import LevelShell from './components/LevelShell'
+import RestScreen from './components/RestScreen'
 import Guide from './components/Guide'
 import Ending from './components/Ending'
 import JourneyPrologue from './components/JourneyPrologue'
+import ChiPrototype from './prototype/ChiPrototype'
 import { LEVELS, rollCard, shuffleLevels } from './game/content'
+import { availableNodeIds, completeRouteNode, createRoute } from './game/route'
 import { audio } from './game/audio'
 import type { LevelId, RewardCard, SaveState, Screen } from './game/types'
 import './App.css'
@@ -18,6 +21,7 @@ function loadSave(): SaveState | null {
     if (!raw) return null
     const value = JSON.parse(raw) as SaveState
     if (!Array.isArray(value.order) || !Array.isArray(value.completed) || !Array.isArray(value.cards)) return null
+    if (!value.route) return { ...value, completed: [], route: createRoute(value.seed) }
     return value
   } catch { return null }
 }
@@ -33,6 +37,8 @@ export default function App() {
   const [volume, setVolume] = useState(saved?.volume ?? 0.45)
   const [muted, setMuted] = useState(false)
   const [currentLevel, setCurrentLevel] = useState<LevelId | null>(null)
+  const [activeNodeId, setActiveNodeId] = useState<string | null>(null)
+  const [route, setRoute] = useState(saved?.route ?? createRoute(saved?.seed ?? 20261121))
   const [replay, setReplay] = useState(false)
   const [activeCard, setActiveCard] = useState<RewardCard | null>(null)
   const [showCollection, setShowCollection] = useState(false)
@@ -40,9 +46,9 @@ export default function App() {
 
   useEffect(() => { audio.setVolume(volume) }, [volume])
   useEffect(() => {
-    const state: SaveState = { seed, order, completed, cards, volume }
+    const state: SaveState = { seed, order, completed, cards, volume, route }
     localStorage.setItem(SAVE_KEY, JSON.stringify(state))
-  }, [seed, order, completed, cards, volume])
+  }, [seed, order, completed, cards, volume, route])
   useEffect(() => {
     if (screen !== 'arrival') return
     const timer = window.setTimeout(() => setArrived(true), 1500)
@@ -55,26 +61,35 @@ export default function App() {
     startAudio()
     const nextSeed = Math.floor(Date.now() % 1000000)
     setSeed(nextSeed); setOrder(shuffleLevels(nextSeed)); setCompleted([]); setCards([])
+    setRoute(createRoute(nextSeed)); setActiveNodeId(null)
     setCurrentLevel(null); setActiveCard(null); setShowCollection(false); setReplay(false)
     setScreen('prologue')
   }
 
   const continueGame = () => {
     startAudio()
-    setScreen(completed.length >= 5 ? 'ending' : 'map')
+    setScreen(route.path.length > 4 ? 'ending' : 'map')
   }
 
-  const nextFromMap = (level: LevelId | null) => {
+  const nextFromMap = (nodeId: string) => {
+    if (!availableNodeIds(route).includes(nodeId)) return
+    const node = route.nodes.find((item) => item.id === nodeId)
+    if (!node) return
     audio.play('click')
-    if (!level) { setScreen('ending'); return }
-    setCurrentLevel(level); setScreen('level')
+    if (node.kind === 'summit') { setScreen('ending'); return }
+    setActiveNodeId(node.id)
+    if (node.kind === 'rest') { setScreen('rest'); return }
+    if (node.level) { setCurrentLevel(node.level); setScreen('level') }
   }
 
-  const completeLevel = (id: LevelId) => {
-    if (completed.includes(id)) return
-    const nextCompleted = [...completed, id]
-    setCompleted(nextCompleted); setCurrentLevel(null); setScreen('map'); setReplay(true)
+  const finishNode = (id: LevelId | null) => {
+    if (!activeNodeId) return
+    setRoute((current) => completeRouteNode(current, activeNodeId))
+    setActiveNodeId(null); setCurrentLevel(null); setScreen('map'); setReplay(true)
     window.setTimeout(() => setReplay(false), 2700)
+    if (!id) return
+    const nextCompleted = [...completed, id]
+    setCompleted(nextCompleted)
     const reward = rollCard(seed, id, nextCompleted.length)
     if (reward && !cards.some((card) => card.id === reward.id)) {
       setCards((current) => [...current, reward]); setActiveCard(reward); setFlipped(false); audio.play('card')
@@ -97,7 +112,8 @@ export default function App() {
             <p>一只猫，一座山，和一次重新建立联系的攀登。</p>
             <div className="title-actions">
               <button type="button" className="primary-button" onClick={newGame}><Play size={18} />开始攀登</button>
-              {saved && <button type="button" className="secondary-button" onClick={continueGame}>继续上次 · {saved.completed.length} / 5</button>}
+              <button type="button" className="secondary-button" onClick={() => setScreen('prototype')}><Eye size={18} />痴 · 美术与交互原型</button>
+              {saved && <button type="button" className="secondary-button" onClick={continueGame}>继续上次 · {saved.route ? saved.route.path.length - 1 : saved.completed.length} / 4</button>}
             </div>
             <span className="title-note">完整测试版 · 鼠标与触屏可玩</span>
           </div>
@@ -122,8 +138,10 @@ export default function App() {
         </section>
       )}
 
-      {screen === 'map' && <MapScreen order={order} completed={completed} cards={cards} seed={seed} replay={replay} onNext={nextFromMap} onShowCards={() => setShowCollection(true)} />}
-      {screen === 'level' && currentLevel && <LevelShell level={LEVELS[currentLevel]} onComplete={completeLevel} onExit={() => { setCurrentLevel(null); setScreen('map') }} />}
+      {screen === 'map' && <RouteMap route={route} cards={cards} replay={replay} onNext={nextFromMap} onShowCards={() => setShowCollection(true)} />}
+      {screen === 'level' && currentLevel && <LevelShell level={LEVELS[currentLevel]} onComplete={finishNode} onExit={() => { setCurrentLevel(null); setActiveNodeId(null); setScreen('map') }} />}
+      {screen === 'rest' && activeNodeId && <RestScreen location={route.nodes.find((node) => node.id === activeNodeId)?.location ?? '山亭'} onComplete={() => finishNode(null)} />}
+      {screen === 'prototype' && <ChiPrototype onExit={() => setScreen('title')} />}
       {screen === 'ending' && <Ending onRestart={newGame} />}
 
       {activeCard && (

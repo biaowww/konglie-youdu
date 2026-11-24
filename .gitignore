@@ -8,3 +8,4 @@ qa/public-*
 qa/chrome-profile/
 qa/remote-source*
 app/art-manifest.json
+app/chi-art-manifest.json

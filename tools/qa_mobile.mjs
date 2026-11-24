@@ -32,10 +32,10 @@ try {
   const evaluate = async (expression) => { const result = await send('Runtime.evaluate', { expression, returnByValue: true, awaitPromise: true }, sessionId); if (result.exceptionDetails) throw new Error(JSON.stringify(result.exceptionDetails)); return result.result?.value }
   const screenshot = async (name) => { const shot = await send('Page.captureScreenshot', { format: 'png' }, sessionId); fs.writeFileSync(path.join(OUT, name), Buffer.from(shot.data, 'base64')) }
   const loadLevel = async (level) => {
-    await evaluate(`localStorage.setItem('youdu-save-v1',JSON.stringify({seed:7,order:['${level}','chen','man','yi','tan'],completed:[],cards:[],volume:0}))`)
+    await evaluate(`localStorage.setItem('youdu-save-v1',JSON.stringify({seed:7,order:['${level}','chen','man','yi','tan'],completed:[],cards:[],volume:0,route:{seed:7,nodes:[{id:'city',layer:0,kind:'start',location:'测试入口',x:20,y:80,next:['test']},{id:'test',layer:1,kind:'level',level:'${level}',location:'测试地点',x:50,y:50,next:[]}],currentNodeId:'city',path:['city']}}))`)
     await send('Page.navigate', { url: URL }, sessionId); await sleep(1500)
-    await evaluate(`document.querySelector('.title-actions .secondary-button').click()`); await sleep(250)
-    await evaluate(`document.querySelector('.map-node.node-next').click()`); await sleep(200)
+    await evaluate(`[...document.querySelectorAll('.title-actions button')].find(button=>button.textContent.includes('继续上次')).click()`); await sleep(250)
+    await evaluate(`document.querySelector('.route-node.is-next').click()`); await sleep(200)
     await evaluate(`document.querySelector('.statue-hotspot').click()`); await sleep(1450)
   }
 
@@ -73,7 +73,7 @@ try {
   check('无控制台错误', report.consoleErrors.length === 0)
   check('无失败资源', report.networkErrors.length === 0)
 } catch (error) { report.fatal = String(error); check('移动验收执行完成', false) }
-finally { try { await send('Browser.close') } catch { /* closed */ } if (child.exitCode === null) child.kill() }
+finally { try { await Promise.race([send('Browser.close'), sleep(1000)]) } catch { /* closed */ } if (child.exitCode === null) child.kill() }
 fs.writeFileSync(path.join(OUT, 'report.json'), JSON.stringify(report, null, 2))
 console.log(JSON.stringify(report, null, 2))
 if (report.fatal || report.checks.some((item) => !item.pass)) process.exitCode = 1

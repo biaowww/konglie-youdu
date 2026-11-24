@@ -1,0 +1,313 @@
+.chi-prototype {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  background: #0d100e;
+  color: #e7e2d6;
+}
+
+.chi-scene {
+  position: relative;
+  width: min(100vw, calc(100dvh * 9 / 16));
+  height: min(100dvh, calc(100vw * 16 / 9));
+  overflow: hidden;
+  isolation: isolate;
+  background: #29302b;
+  box-shadow: 0 0 100px rgba(0, 0, 0, .52);
+}
+
+.chi-temple,
+.chi-color-wash,
+.chi-dust {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.chi-temple {
+  inset: -5%;
+  background: url('/assets/chi/temple.webp') 56% center / cover;
+  filter: grayscale(.94) brightness(.68) contrast(1.06);
+  animation: chi-temple-breathe 18s ease-in-out infinite alternate;
+  transition: filter 1.2s ease;
+}
+
+.chi-phase-inner .chi-temple,
+.chi-phase-complete .chi-temple { filter: grayscale(.35) saturate(.82) brightness(.64) contrast(1.04); }
+.chi-phase-complete .chi-temple { filter: grayscale(.05) saturate(1.12) brightness(.76); }
+.chi-color-wash {
+  z-index: 1;
+  background: linear-gradient(155deg, rgba(231, 226, 214, .05), rgba(21, 26, 24, .18) 45%, rgba(21, 26, 24, .72));
+  transition: background 1.2s ease;
+}
+.chi-phase-inner .chi-color-wash,
+.chi-phase-complete .chi-color-wash {
+  background: linear-gradient(145deg, rgba(128, 168, 157, .18), rgba(213, 178, 103, .06) 48%, rgba(21, 26, 24, .68));
+}
+
+@keyframes chi-temple-breathe {
+  from { transform: scale(1.02) translate3d(-.4%, 0, 0); }
+  to { transform: scale(1.055) translate3d(.6%, -.5%, 0); }
+}
+
+.chi-dust { z-index: 2; }
+.chi-dust i {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(231, 226, 214, .36);
+  animation-name: chi-dust-float;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+@keyframes chi-dust-float {
+  0%, 100% { opacity: .08; transform: translate(0, 8px); }
+  45% { opacity: .65; }
+  60% { transform: translate(13px, -24px); opacity: .12; }
+}
+
+.chi-header {
+  position: absolute;
+  z-index: 30;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: max(14px, env(safe-area-inset-top)) 14px 28px;
+  background: linear-gradient(180deg, rgba(21, 26, 24, .8), transparent);
+}
+.chi-header h1 { margin: 3px 0 0; font: 500 36px/1 'Songti SC', serif; letter-spacing: .12em; }
+.chi-phase-name { display: block; margin-top: 7px; color: #c7c1b4; font-size: 10px; letter-spacing: .12em; }
+.chi-ui-actions { display: flex; align-items: center; gap: 2px; }
+.chi-ui-button {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  padding: 3px;
+  color: #e7e2d6;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: transform 160ms ease, filter 160ms ease;
+}
+.chi-ui-button:hover { transform: translateY(-2px); filter: drop-shadow(0 0 7px rgba(213, 178, 103, .45)); }
+.chi-ui-button img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.chi-ui-button svg { position: relative; z-index: 1; }
+.chi-ui-wide { width: 76px; }
+.chi-ui-wide img { inset: 3px 0; }
+
+.chi-you {
+  position: absolute;
+  z-index: 4;
+  left: -5%;
+  bottom: -3%;
+  width: 58%;
+  pointer-events: none;
+  transform-origin: 50% 100%;
+  animation: chi-you-breathe 4.8s ease-in-out infinite;
+}
+.chi-you-image { display: block; width: 100%; filter: drop-shadow(0 0 12px rgba(231, 226, 214, .12)); }
+.chi-collar { position: absolute; z-index: 2; left: 29%; top: 25%; width: 43%; }
+.chi-collar path { fill: none; stroke: #7a6950; stroke-width: 5; stroke-linecap: round; }
+.chi-neck-jade {
+  position: absolute;
+  z-index: 3;
+  left: 46%;
+  top: 32%;
+  width: 13%;
+  filter: drop-shadow(0 0 8px rgba(128, 168, 157, .7));
+  animation: chi-jade-pulse 2.6s ease-in-out infinite;
+}
+@keyframes chi-you-breathe { 50% { transform: translateY(-.6%) rotate(.25deg); } }
+@keyframes chi-jade-pulse { 50% { opacity: .7; transform: translateY(2%) scale(.94); } }
+
+.chi-statue-button {
+  position: absolute;
+  z-index: 7;
+  right: -3%;
+  top: 16%;
+  width: 59%;
+  padding: 0;
+  color: #e7e2d6;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  animation: chi-statue-idle 5.5s ease-in-out infinite;
+}
+.chi-statue-button img { display: block; width: 100%; filter: drop-shadow(0 0 15px rgba(213, 178, 103, .24)); }
+.chi-statue-ring {
+  position: absolute;
+  left: 18%;
+  top: 14%;
+  width: 62%;
+  aspect-ratio: 1;
+  border: 1px solid rgba(213, 178, 103, .62);
+  border-radius: 48% 52% 45% 55%;
+  animation: chi-statue-ring 2.8s ease-out infinite;
+}
+.chi-statue-label {
+  position: absolute;
+  right: 15%;
+  bottom: 6%;
+  padding: 6px 10px;
+  background: rgba(21, 26, 24, .76);
+  border-left: 2px solid #d5b267;
+  font-size: 12px;
+  letter-spacing: .12em;
+}
+@keyframes chi-statue-idle { 50% { transform: translateY(-1.4%) rotate(.35deg); } }
+@keyframes chi-statue-ring { from { opacity: .75; transform: scale(.86); } to { opacity: 0; transform: scale(1.22); } }
+
+.chi-transition {
+  position: absolute;
+  z-index: 15;
+  left: 50%;
+  top: 38%;
+  display: grid;
+  justify-items: center;
+  transform: translateX(-50%);
+  color: #e7e2d6;
+  font: 500 18px 'Songti SC', serif;
+  letter-spacing: .2em;
+}
+.chi-transition img { width: 100px; animation: chi-transition-jade 1.4s ease both; }
+.chi-transition span { margin-top: 12px; }
+@keyframes chi-transition-jade { from { opacity: 0; transform: scale(.4) rotate(-24deg); } 60% { opacity: 1; transform: scale(1.2) rotate(5deg); } to { transform: scale(1) rotate(0); } }
+
+.chi-lamp-field { position: absolute; inset: 0; z-index: 7; pointer-events: none; }
+.chi-lamp {
+  position: absolute;
+  padding: 0;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  pointer-events: auto;
+  filter: drop-shadow(0 0 9px rgba(213, 178, 103, .24));
+  animation: chi-lamp-sway 4.6s ease-in-out infinite;
+  animation-delay: var(--lamp-delay);
+}
+.chi-lamp svg { display: block; width: 100%; overflow: visible; }
+.chi-lamp-aura { fill: rgba(213, 178, 103, .09); }
+.chi-lamp-flame { fill: #d5b267; transform-origin: 32px 45px; animation: chi-flame 1.4s ease-in-out infinite alternate; }
+.chi-lamp-glass { fill: rgba(231, 226, 214, .07); stroke: rgba(231, 226, 214, .34); stroke-width: 1.2; }
+.chi-lamp-metal { fill: #35403a; }
+.chi-lamp-handle { fill: none; stroke: #35403a; stroke-width: 2.4; }
+.chi-lamp-1 .chi-lamp-flame { fill: #80a89d; }
+.chi-lamp-1 { filter: drop-shadow(0 0 10px rgba(128, 168, 157, .3)); }
+.chi-lamp-2 .chi-lamp-flame { fill: #6f8792; }
+.chi-lamp-2 { filter: drop-shadow(0 0 8px rgba(111, 135, 146, .35)); }
+.chi-lamp-out { opacity: .12; filter: grayscale(1); pointer-events: none; }
+.chi-lamp-out .chi-lamp { pointer-events: none; }
+@keyframes chi-lamp-sway { 50% { margin-top: -7px; transform: translate(-50%, -50%) rotate(1.6deg); } }
+@keyframes chi-flame { from { transform: scale(.88) rotate(-2deg); opacity: .7; } to { transform: scale(1.1) rotate(2deg); opacity: 1; } }
+
+.chi-progress {
+  position: absolute;
+  z-index: 12;
+  left: 4%;
+  top: 16%;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #e7e2d6;
+  font-size: 11px;
+  letter-spacing: .1em;
+}
+.chi-progress i { width: 8px; height: 8px; border: 1px solid #d5b267; border-radius: 50%; }
+.chi-progress i.is-found { background: #d5b267; box-shadow: 0 0 8px rgba(213, 178, 103, .7); }
+.chi-progress strong { font-weight: 400; color: #d5b267; }
+
+.chi-fen-vision { position: absolute; inset: 0; z-index: 9; overflow: hidden; pointer-events: none; }
+.chi-fen-vision img {
+  position: absolute;
+  top: 17%;
+  right: -20%;
+  width: 82%;
+  opacity: 0;
+  filter: grayscale(.7) sepia(.35) hue-rotate(140deg) saturate(1.5) drop-shadow(0 0 22px rgba(111, 135, 146, .5));
+  animation: chi-fen-pass 5s ease-in-out both;
+}
+.chi-fen-vision p {
+  position: absolute;
+  right: 6%;
+  top: 56%;
+  max-width: 72%;
+  margin: 0;
+  padding: 7px 0 7px 12px;
+  color: #e7e2d6;
+  border-left: 1px solid #6f8792;
+  font: 500 20px/1.6 'Songti SC', serif;
+  text-shadow: 0 2px 12px #151a18;
+  animation: chi-fen-text 5s ease both;
+}
+.chi-fen-episode-2 img { right: auto; left: -22%; transform: scaleX(-1); animation-name: chi-fen-pass-left; }
+.chi-fen-episode-2 p { right: auto; left: 6%; top: 28%; }
+@keyframes chi-fen-pass {
+  0% { opacity: 0; transform: translateX(25%) scale(.85); }
+  24% { opacity: .56; }
+  62% { opacity: .34; transform: translateX(-20%) scale(1.03); }
+  100% { opacity: 0; transform: translateX(-65%) scale(1.12); }
+}
+@keyframes chi-fen-pass-left {
+  0% { opacity: 0; transform: translateX(-25%) scale(.85) scaleX(-1); }
+  24% { opacity: .5; }
+  62% { opacity: .32; transform: translateX(20%) scale(1.03) scaleX(-1); }
+  100% { opacity: 0; transform: translateX(65%) scale(1.12) scaleX(-1); }
+}
+@keyframes chi-fen-text { 0%, 100% { opacity: 0; } 20%, 68% { opacity: 1; } }
+
+.chi-guide {
+  position: absolute;
+  z-index: 20;
+  left: 4%;
+  bottom: max(14px, env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 84%;
+  min-height: 78px;
+  padding: 10px 18px 10px 10px;
+  background: linear-gradient(100deg, rgba(21, 26, 24, .93), rgba(21, 26, 24, .68));
+  border-left: 2px solid #80a89d;
+  clip-path: polygon(0 4%, 98% 0, 100% 91%, 96% 100%, 2% 96%);
+}
+.chi-guide img { flex: 0 0 auto; width: 62px; height: 62px; object-fit: contain; }
+.chi-guide span { color: #80a89d; font-size: 11px; letter-spacing: .18em; }
+.chi-guide p { margin: 4px 0 0; color: #e7e2d6; font-size: 13px; line-height: 1.6; }
+
+.chi-complete {
+  position: absolute;
+  z-index: 14;
+  right: 5%;
+  bottom: 19%;
+  width: 72%;
+  padding: 20px 20px 18px;
+  background: linear-gradient(110deg, rgba(21, 26, 24, .84), rgba(21, 26, 24, .45));
+  border-left: 2px solid #d5b267;
+}
+.chi-complete h2 { margin: 10px 0 16px; font: 500 24px/1.55 'Songti SC', serif; }
+
+@media (max-width: 760px) {
+  .chi-header { padding-left: 10px; padding-right: 8px; }
+  .chi-header h1 { font-size: 30px; }
+  .chi-ui-button { width: 38px; height: 38px; }
+  .chi-ui-wide { width: 65px; }
+  .chi-you { width: 64%; }
+  .chi-guide { width: 90%; gap: 8px; }
+  .chi-guide img { width: 52px; height: 52px; }
+  .chi-guide p { font-size: 12px; }
+  .chi-complete h2 { font-size: 21px; }
+}
+
+.youdu-app[data-screen='prototype'] .sound-controls,
+.youdu-app[data-screen='prototype'] .new-run-button { display: none; }

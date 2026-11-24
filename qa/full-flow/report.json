@@ -1,111 +1,56 @@
 {
+  "choice": "first",
   "checks": [
     {
-      "name": "标题使用空裂：游渡",
+      "name": "入山按钮出现",
       "pass": true
     },
     {
-      "name": "出城使用24帧分层动画",
+      "name": "四层路线与山顶共10个节点",
       "pass": true
     },
     {
-      "name": "地图旅行镜头已出现",
+      "name": "起点有两个有效候选",
       "pass": true
     },
     {
-      "name": "卦山镜头已出现",
+      "name": "地图可放大",
       "pass": true
     },
     {
-      "name": "动画自然播放到240帧",
+      "name": "地图可拖动平移",
       "pass": true
     },
     {
-      "name": "地图头像 icon 已加载",
+      "name": "man可完成",
       "pass": true
     },
     {
-      "name": "五关顺序包含五个不同关卡",
+      "name": "tan可完成",
       "pass": true
     },
     {
-      "name": "man 进入正确关卡",
+      "name": "chi可完成",
       "pass": true
     },
     {
-      "name": "隐对话框使用指定头像",
+      "name": "路线可到达最终结局",
       "pass": true
     },
     {
-      "name": "man 进入里世界",
+      "name": "每局恰好三个主题关卡",
       "pass": true
     },
     {
-      "name": "man 可完成",
+      "name": "每局恰好一次歇脚",
       "pass": true
     },
     {
-      "name": "yi 进入正确关卡",
+      "name": "实际路径记录为起点加四段",
       "pass": true
     },
     {
-      "name": "yi 进入里世界",
-      "pass": true
-    },
-    {
-      "name": "yi 可完成",
-      "pass": true
-    },
-    {
-      "name": "tan 进入正确关卡",
-      "pass": true
-    },
-    {
-      "name": "tan 进入里世界",
-      "pass": true
-    },
-    {
-      "name": "贪背包达到目标回声",
-      "pass": true
-    },
-    {
-      "name": "tan 可完成",
-      "pass": true
-    },
-    {
-      "name": "tan 卡牌可翻面",
-      "pass": true
-    },
-    {
-      "name": "chen 进入正确关卡",
-      "pass": true
-    },
-    {
-      "name": "chen 进入里世界",
-      "pass": true
-    },
-    {
-      "name": "chen 可完成",
-      "pass": true
-    },
-    {
-      "name": "chi 进入正确关卡",
-      "pass": true
-    },
-    {
-      "name": "chi 进入里世界",
-      "pass": true
-    },
-    {
-      "name": "chi 可完成",
-      "pass": true
-    },
-    {
-      "name": "五关全部完成",
-      "pass": true
-    },
-    {
-      "name": "三次触碰后到达最终结局",
+      "name": "375px 多路线地图无横向溢出",
       "pass": true
     },
     {
@@ -119,15 +64,16 @@
   ],
   "levels": [
     "man",
-    "yi",
     "tan",
-    "chen",
     "chi"
   ],
+  "routePath": [
+    "city",
+    "l1-a",
+    "l2-rest-a",
+    "l3-a",
+    "l4-a"
+  ],
   "consoleErrors": [],
-  "networkErrors": [],
-  "requests": 29,
-  "encodedBytes": 3125485,
-  "manFps": 58,
-  "chiFps": 60
+  "networkErrors": []
 }
