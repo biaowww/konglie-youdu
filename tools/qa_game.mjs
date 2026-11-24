@@ -1,8 +1,9 @@
 import { spawn } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const ROOT = '/Users/wvngbvao483/offcircle_dev/konglie-youdu'
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const OUT = path.join(ROOT, 'qa/full-flow')
 fs.mkdirSync(OUT, { recursive: true })
 const URL = process.env.GAME_URL || 'http://127.0.0.1:7100/'

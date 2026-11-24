@@ -1,12 +1,15 @@
 from pathlib import Path
 from PIL import Image, ImageOps, ImageDraw
 import json
+import os
 
 Image.MAX_IMAGE_PIXELS = None
-DRIVE = Path('/Users/wvngbvao483/Library/CloudStorage/GoogleDrive-wvngbvao483@gmail.com/My Drive/元艺极客和超元')
+if 'YOUDU_DRIVE_ROOT' not in os.environ:
+    raise SystemExit('Set YOUDU_DRIVE_ROOT to the local 元艺极客和超元 directory before preparing assets.')
+DRIVE = Path(os.environ['YOUDU_DRIVE_ROOT'])
 ART = DRIVE / 'ProjectBreach/游戏共创Callab（x甜菜）/03 Art'
 OLD = DRIVE / 'ProjectBreach/游戏共创Callab（x甜菜）/_prototype'
-OUT = Path('/Users/wvngbvao483/offcircle_dev/konglie-youdu/app/public/assets')
+OUT = Path(__file__).resolve().parents[1] / 'app/public/assets'
 OUT.mkdir(parents=True, exist_ok=True)
 
 ASSETS = {
@@ -78,5 +81,6 @@ for name, (source, max_size) in ASSETS.items():
         image.save(target, 'WEBP', quality=84, method=6)
     manifest['assets'][name] = {'source': str(source), 'file': target.name, 'originalSize': original_size, 'size': image.size, 'bytes': target.stat().st_size}
 
-(OUT / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding='utf-8')
-print(json.dumps({'exported': len(manifest['assets']), 'missing': manifest['missing'], 'out': str(OUT)}, ensure_ascii=False, indent=2))
+manifest_path = OUT.parent.parent / 'art-manifest.json'
+manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding='utf-8')
+print(json.dumps({'exported': len(manifest['assets']), 'missing': manifest['missing'], 'out': str(OUT), 'manifest': str(manifest_path)}, ensure_ascii=False, indent=2))

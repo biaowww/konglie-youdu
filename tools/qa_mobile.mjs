@@ -1,7 +1,8 @@
 import { spawn } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
-const ROOT='/Users/wvngbvao483/offcircle_dev/konglie-youdu',OUT=path.join(ROOT,'qa/mobile')
+import { fileURLToPath } from 'node:url'
+const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),OUT=path.join(ROOT,'qa/mobile')
 fs.mkdirSync(OUT,{recursive:true})
 const URL=process.env.GAME_URL||'http://127.0.0.1:7101/'
 const child=spawn('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',['--headless=new','--remote-debugging-pipe',`--user-data-dir=${path.join(OUT,'profile')}`,'--no-first-run','--disable-extensions','--disable-gpu','--mute-audio','--window-size=375,812','about:blank'],{stdio:['ignore','ignore','pipe','pipe','pipe']})
