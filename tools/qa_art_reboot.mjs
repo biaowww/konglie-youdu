@@ -72,12 +72,13 @@ try {
   const targetPoint = async () => evaluate(`(()=>{const c=document.querySelector('.reboot-chi canvas');const t=JSON.parse(c.dataset.targets||'[]')[0];if(!t)return null;const r=c.getBoundingClientRect();return{x:r.left+t.x*r.width,y:r.top+t.y*r.height}})()`)
 
   await send('Page.navigate', { url: URL }, sessionId)
-  await until(`document.querySelectorAll('.comic-panel.is-visible').length===1`, 15000)
-  await sleep(550)
+  await until(`document.querySelector('.comic-main-shot')?.dataset.panel==='1'`, 15000)
+  await sleep(1800)
+  check('漫画使用主镜头与分镜索引', await evaluate(`document.querySelectorAll('.comic-rail button').length===4 && !!document.querySelector('.comic-main-shot')`))
   for (let index = 0; index < 4; index += 1) {
     await screenshot(`comic-${index + 1}.png`)
     await evaluate(`document.querySelector('.reboot-comic-footer .reboot-primary').click()`)
-    await sleep(550)
+    await sleep(1800)
   }
   check('四格漫画后进入开始界面', await evaluate(`document.querySelector('.reboot-title h1')?.textContent==='空裂：游渡'`))
   check('完整场景原画已加载', await evaluate(`document.querySelector('.reboot-title-scene')?.naturalWidth>0`))

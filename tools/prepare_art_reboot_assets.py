@@ -49,7 +49,8 @@ for row, suffix in enumerate(['outer', 'inner']):
 cinematic_out = OUT / 'cinematic'
 cinematic_out.mkdir(exist_ok=True)
 for key in ['scene-outer', 'scene-inner', 'scene-complete', 'comic-01', 'comic-02', 'comic-03', 'comic-04']:
-    source = CANDIDATES / 'comparisons' / f'gpt-{key}-ink-v1.png'
+    version = 'v2' if key == 'scene-complete' and (CANDIDATES / 'comparisons' / 'gpt-scene-complete-ink-v2.png').exists() else 'v1'
+    source = CANDIDATES / 'comparisons' / f'gpt-{key}-ink-{version}.png'
     if not source.exists():
         raise FileNotFoundError(source)
     image = Image.open(source).convert('RGBA')

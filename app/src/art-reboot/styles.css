@@ -121,3 +121,51 @@ button:focus-visible { outline: 2px solid #d2af6a; outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+.comic-cinema { display: grid; grid-template-columns: minmax(0, 1fr) 108px; gap: 10px; flex: 1; min-height: 0; }
+.comic-main-shot { position: relative; align-self: center; width: 100%; height: auto; max-height: 100%; aspect-ratio: 1 / 1; overflow: hidden; isolation: isolate; background: #e9e2d3; border: 1px solid #918a79; animation: comic-main-reveal .45s steps(3, end) both; }
+.comic-main-shot .comic-shot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.comic-rail { display: flex; flex-direction: column; gap: 8px; min-height: 0; }
+.comic-rail button { position: relative; flex: 1; min-height: 0; padding: 0; overflow: hidden; background: #d5cdbd; border: 1px solid #a49b88; cursor: pointer; }
+.comic-rail button img { width: 100%; height: 100%; object-fit: cover; opacity: .5; filter: grayscale(.65); transition: opacity 160ms ease, filter 160ms ease; }
+.comic-rail button.is-active { border-color: #a9833f; box-shadow: 0 0 0 1px #a9833f; }
+.comic-rail button.is-active img, .comic-rail button:hover img { opacity: 1; filter: grayscale(0); }
+.comic-rail button span { position: absolute; left: 4px; right: 4px; bottom: 4px; display: flex; align-items: center; gap: 5px; padding: 2px 4px; color: #20231f; background: rgba(233, 226, 211, .9); font-size: 10px; }
+.comic-rail button small { color: #8a7450; font-size: 9px; }
+.comic-main-shot .comic-caption { position: absolute; z-index: 3; max-width: 58%; padding: 10px 12px; background: rgba(233, 226, 211, .9); border-top: 1px solid rgba(32, 35, 31, .2); }
+.comic-main-shot .comic-caption span { color: #6c6c60; font-size: 9px; letter-spacing: .1em; }
+.comic-main-shot .comic-caption p { margin: 4px 0 0; font: 500 15px/1.5 'Songti SC', serif; }
+.comic-main-shot .caption-0 { left: 0; right: auto; top: auto; bottom: 0; }
+.comic-main-shot .caption-1 { left: auto; right: 0; top: 0; bottom: auto; }
+.comic-main-shot .caption-2 { left: 0; right: auto; top: 0; bottom: auto; }
+.comic-main-shot .caption-3 { left: 0; right: auto; top: auto; bottom: 0; max-width: 68%; }
+.comic-effect-rift { position: absolute; z-index: 1; inset: 0; background: linear-gradient(112deg, transparent 42%, rgba(233, 226, 211, .74) 50%, transparent 58%); animation: comic-rift-open 1.5s steps(3, end) both; }
+.comic-effect-retreat { position: absolute; z-index: 1; inset: 0; background: #20231f; animation: comic-ink-retreat 1.4s steps(4, end) forwards; }
+.comic-effect-footprints { position: absolute; z-index: 2; inset: 0; pointer-events: none; }
+.comic-effect-footprints i { position: absolute; width: 8px; height: 5px; border-radius: 45% 55% 40% 60%; background: #20231f; opacity: 0; animation: comic-footprint .25s steps(1, end) forwards; animation-delay: calc(.45s + var(--step) * .3s); }
+.comic-effect-footprints i:nth-child(1) { left: 18%; top: 79%; transform: rotate(-18deg); }
+.comic-effect-footprints i:nth-child(2) { left: 25%; top: 74%; transform: rotate(12deg); }
+.comic-effect-footprints i:nth-child(3) { left: 32%; top: 68%; transform: rotate(-14deg); }
+.comic-effect-footprints i:nth-child(4) { left: 39%; top: 62%; transform: rotate(9deg); }
+.comic-effect-footprints i:nth-child(5) { left: 46%; top: 56%; transform: rotate(-8deg); }
+.comic-effect-road { position: absolute; z-index: 1; inset: 0; background: #e9e2d3; animation: comic-road-reveal 1.6s steps(3, end) forwards; }
+.comic-effect-clusters { position: absolute; z-index: 2; inset: 0; pointer-events: none; }
+.comic-effect-clusters i { position: absolute; width: 10px; height: 8px; border-radius: 48% 52% 45% 55%; background: #20231f; opacity: 0; animation: comic-cluster 1.5s steps(3, end) forwards; animation-delay: calc(var(--step) * .16s); }
+.comic-effect-clusters i:nth-child(1) { left: 18%; top: 72%; width: 16px; height: 12px; }
+.comic-effect-clusters i:nth-child(2) { left: 34%; top: 66%; width: 9px; height: 7px; }
+.comic-effect-clusters i:nth-child(3) { left: 49%; top: 75%; width: 20px; height: 13px; }
+.comic-effect-clusters i:nth-child(4) { left: 61%; top: 62%; width: 7px; height: 5px; }
+.comic-effect-clusters i:nth-child(5) { left: 72%; top: 70%; width: 12px; height: 8px; }
+@keyframes comic-main-reveal { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0); } }
+@keyframes comic-rift-open { from { clip-path: inset(0 48% 0 48%); opacity: 0; } to { clip-path: inset(0); opacity: 1; } }
+@keyframes comic-ink-retreat { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 100% 0 0); } }
+@keyframes comic-footprint { to { opacity: .82; } }
+@keyframes comic-road-reveal { from { clip-path: inset(0); } to { clip-path: inset(100% 0 0 0); } }
+@keyframes comic-cluster { 0% { opacity: 0; transform: translate(10px, -8px) scale(.7); } 60% { opacity: .55; } 100% { opacity: .9; transform: translate(0, 0) scale(1); } }
+@media (max-width: 760px) {
+  .comic-cinema { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) 64px; }
+  .comic-rail { flex-direction: row; }
+  .comic-rail button img { display: none; }
+  .comic-rail button span { inset: 3px; justify-content: center; }
+  .comic-main-shot .comic-caption { max-width: 82%; }
+  .comic-main-shot .caption-3 { max-width: 88%; }
+}
