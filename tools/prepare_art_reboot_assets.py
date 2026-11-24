@@ -3,16 +3,18 @@ from PIL import Image
 import json
 import os
 
-if 'YOUDU_ART_CANDIDATES' not in os.environ:
-    raise SystemExit('Set YOUDU_ART_CANDIDATES to the AI_出图_OpenRouter directory.')
-SOURCE = Path(os.environ['YOUDU_ART_CANDIDATES'])
+if 'YOUDU_ART_ROOT' not in os.environ:
+    raise SystemExit('Set YOUDU_ART_ROOT to the 03 Art directory.')
+ART_ROOT = Path(os.environ['YOUDU_ART_ROOT'])
+CANDIDATES = ART_ROOT / 'AI生成资产'
 OUT = Path(__file__).resolve().parents[1] / 'app/public/assets/art-reboot'
 OUT.mkdir(parents=True, exist_ok=True)
 manifest = {'status': 'AI-assisted test assets; not final production art', 'assets': {}}
 
 for key in ['you', 'statue', 'city', 'temple', 'lamp', 'yin', 'fen']:
     version = 'v2' if key == 'yin' else 'v1'
-    source = SOURCE / f'20261124_art_reboot_kimi_{key}_{version}.png'
+    ink_candidate = CANDIDATES / 'comparisons' / f'gpt-{key}-ink-v1.png'
+    source = ink_candidate if ink_candidate.exists() else CANDIDATES / 'kimi' / f'20261124_art_reboot_kimi_{key}_{version}.png'
     if not source.exists():
         raise FileNotFoundError(source)
     image = Image.open(source).convert('RGBA')
@@ -22,7 +24,10 @@ for key in ['you', 'statue', 'city', 'temple', 'lamp', 'yin', 'fen']:
     image.save(target, 'WEBP', quality=88, method=6)
     manifest['assets'][key] = {'source': source.name, 'originalSize': original_size, 'outputSize': image.size, 'bytes': target.stat().st_size}
 
-sheet = Image.open(SOURCE / '20261124_art_reboot_kimi_ui_sheet_v1.png').convert('RGBA')
+sheet_path = CANDIDATES / 'comparisons' / 'gpt-ui_sheet-ink-v1.png'
+if not sheet_path.exists():
+    sheet_path = CANDIDATES / 'kimi' / '20261124_art_reboot_kimi_ui_sheet_v1.png'
+sheet = Image.open(sheet_path).convert('RGBA')
 cell_w, cell_h = sheet.width // 4, sheet.height // 2
 for row, suffix in enumerate(['outer', 'inner']):
     for column, name in enumerate(['back', 'volume', 'hint', 'reset']):

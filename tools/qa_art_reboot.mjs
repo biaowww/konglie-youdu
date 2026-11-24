@@ -111,6 +111,7 @@ try {
   await evaluate(`document.querySelector('.reboot-title-actions .reboot-primary').click()`)
   await evaluate(`document.querySelector('.reboot-statue').click()`)
   await until(`document.querySelector('.reboot-chi')?.dataset.phase==='inner'`)
+  await until(`JSON.parse(document.querySelector('.reboot-chi canvas')?.dataset.targets||'[]').length===3`)
   const mobilePoint = await targetPoint()
   await send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: mobilePoint.x, y: mobilePoint.y, id: 1 }] }, sessionId)
   await send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }, sessionId)

@@ -3,7 +3,7 @@
 ## art-reboot-kimi 独立资产
 
 - 独立原型使用 `app/public/assets/art-reboot/` 中全新生成的统一美术，不使用旧图抠片。
-- `tools/prepare_art_reboot_assets.py` 从既定 OpenRouter 候选图生成本地 WebP 与 UI 单元，记录个人来源的 `app/art-reboot-manifest.json` 已忽略公开。
+- `tools/prepare_art_reboot_assets.py` 以 `YOUDU_ART_ROOT` 指向 `03 Art`，从 `AI生成资产/` 中的既定候选图生成本地 WebP 与 UI 单元，记录个人来源的 `app/art-reboot-manifest.json` 已忽略公开。
 - 完整状态与验收见 `docs/ART_REBOOT.md`。
 
 ## 来源
