@@ -55,4 +55,6 @@ node ../tools/qa_mobile.mjs
 
 嗔、慢的补全机制，贪的具体数值、卡牌掉率和部分台词是待试玩参数，不应视为最终定稿。正式角色动画清稿、录制配乐、配音、最终 CG 与 Godot 迁移仍属后续工作。
 
-GitHub：`https://github.com/biaowww/konglie-youdu`（私有）。
+GitHub：`https://github.com/biaowww/konglie-youdu`（public）。
+
+V1 试玩：`https://biaowww.github.io/konglie-youdu/`。

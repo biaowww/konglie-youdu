@@ -1,6 +1,23 @@
 # 公开发布记录
 
-## 当前可玩入口
+## V1 GitHub Pages · 当前主入口
+
+**https://biaowww.github.io/konglie-youdu/**
+
+- 仓库：`https://github.com/biaowww/konglie-youdu`（public）。
+- V1 源分支：`v1-playable`；首个提交：`fd4d5d8`。
+- 发布：GitHub Actions `Deploy Youdu to GitHub Pages`，构建目录 `app/dist`。
+- Pages 环境允许 `main` 与 `v1-playable`；远端 `main` 的历史敏感文件已单独清理，未强推或覆盖其历史。
+- 匿名桌面全流程与 375px 触摸验收通过，控制台错误 0、失败资源 0。
+
+## V1 更新方式
+
+1. 修改后运行 `npm run build`、`npm run lint`、桌面与移动验收。
+2. 推送 `v1-playable`，由 GitHub Actions 构建并发布精确静态产物。
+3. 检查 workflow 成功后，再在公开 URL 重跑关键路径与完整通关。
+4. 发布记录更新本文件，验收结果更新 `docs/QA.md`。
+
+## 旧版 kimi.link 临时入口
 
 **https://konglie-youdu.ok.kimi.link**
 
@@ -19,7 +36,7 @@
   `4ac874b2c928f9d4e9fa68e5ef861b8f57b864ebfed3e2682a44dbf763dff222`。
 - 在公开 URL 上完成五关、卡牌翻面、复色地图与三次触碰结局；控制台错误与失败资源均为 0。
 
-## 更新方式
+## 旧版 kimi.link 更新方式
 
 1. 修改源码并重新跑 `npm run build`、`npm run lint`、桌面与移动验收。
 2. 从 `app/dist/` 内容重新打包，不包含 `assets/manifest.json`（其中保留本机源路径，仅供内部追溯）。

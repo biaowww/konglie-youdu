@@ -10,6 +10,13 @@
 - 痴约 60 fps、慢约 54 fps；数字来自本次验收环境，不代表所有设备。
 - 截图：`qa/full-flow/prologue-*.png`、`qa/mobile/mobile-prologue.png`；美术小样对照在 `qa/v1/`。
 
+## V1 GitHub Pages 匿名验收
+
+- 公开地址：`https://biaowww.github.io/konglie-youdu/`。
+- 匿名 Chrome 完成三镜出城、五关、卡牌、复色地图与三次触碰结局。
+- 375×812 完成出城跳过、痴触摸与贪背包检查。
+- 桌面与移动端控制台错误均为 0，失败资源均为 0。
+
 ## 最终构建全流程
 
 工具：`tools/qa_game.mjs`，真实 Chrome / CDP，1440 × 900。
@@ -43,7 +50,7 @@
 
 报告：`qa/mobile/report.json`。截图：`qa/mobile/*.png`。
 
-## 公开 URL 验收
+## 旧版公开 URL 验收
 
 在 `https://konglie-youdu.ok.kimi.link` 上再次完成五关、卡牌翻面、复色地图和三次触碰结局。全部检查通过，控制台错误与失败资源均为 0。
 
