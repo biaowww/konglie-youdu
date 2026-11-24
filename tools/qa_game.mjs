@@ -7,7 +7,8 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const OUT = path.join(ROOT, 'qa/full-flow')
 fs.mkdirSync(OUT, { recursive: true })
 const URL = process.env.GAME_URL || 'http://127.0.0.1:7100/'
-const child = spawn('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', [
+const CHROME_PATH = process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+const child = spawn(CHROME_PATH, [
   '--headless=new', '--remote-debugging-pipe', `--user-data-dir=${path.join(OUT, 'profile-final')}`,
   '--no-first-run', '--disable-extensions', '--disable-sync', '--disable-gpu', '--hide-scrollbars', '--mute-audio', '--window-size=1440,900', 'about:blank',
 ], { stdio: ['ignore', 'ignore', 'pipe', 'pipe', 'pipe'] })

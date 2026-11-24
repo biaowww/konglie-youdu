@@ -1,5 +1,7 @@
 # 交给 Fable 5.2：0→1 独立开发交接
 
+> 授权、端口转发与逐步验收操作见 `docs/FABLE_RUNBOOK.md`。
+
 ## 模型与工作方式
 
 - 文本与开发：`anthropic/claude-fable-5.2`，已实际返回 `FABLE_5_2_OK`。

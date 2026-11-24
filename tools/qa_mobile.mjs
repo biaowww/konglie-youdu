@@ -7,7 +7,8 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const OUT = path.join(ROOT, 'qa/mobile')
 fs.mkdirSync(OUT, { recursive: true })
 const URL = process.env.GAME_URL || 'http://127.0.0.1:7101/'
-const child = spawn('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', ['--headless=new', '--remote-debugging-pipe', `--user-data-dir=${path.join(OUT, 'profile')}`, '--no-first-run', '--disable-extensions', '--disable-gpu', '--mute-audio', '--window-size=375,812', 'about:blank'], { stdio: ['ignore', 'ignore', 'pipe', 'pipe', 'pipe'] })
+const CHROME_PATH = process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+const child = spawn(CHROME_PATH, ['--headless=new', '--remote-debugging-pipe', `--user-data-dir=${path.join(OUT, 'profile')}`, '--no-first-run', '--disable-extensions', '--disable-gpu', '--mute-audio', '--window-size=375,812', 'about:blank'], { stdio: ['ignore', 'ignore', 'pipe', 'pipe', 'pipe'] })
 const writer = child.stdio[3]; const reader = child.stdio[4]
 let nextId = 0; let buffer = Buffer.alloc(0); const pending = new Map(); const events = []
 reader.on('data', (chunk) => {
