@@ -1,5 +1,11 @@
 # 美术与音频资产说明
 
+## art-reboot-kimi 独立资产
+
+- 独立原型使用 `app/public/assets/art-reboot/` 中全新生成的统一美术，不使用旧图抠片。
+- `tools/prepare_art_reboot_assets.py` 从既定 OpenRouter 候选图生成本地 WebP 与 UI 单元，记录个人来源的 `app/art-reboot-manifest.json` 已忽略公开。
+- 完整状态与验收见 `docs/ART_REBOOT.md`。
+
 ## 来源
 
 - 主资产：`03 Art/主要资产表.xlsx` 与 `03 Art/` 下的概念美术。

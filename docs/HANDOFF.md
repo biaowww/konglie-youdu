@@ -1,5 +1,9 @@
 # 《空裂：游渡》开发交接说明
 
+## art-reboot-kimi 当前主线
+
+独立统一美术与痴可玩切片位于 `app/art-reboot.html` 和 `app/src/art-reboot/`。四格漫画、开始界面、神像切换、灯海、忿与 375px 触摸均已验收。完整说明见 `docs/ART_REBOOT.md`，并行写入边界见 `docs/ART_REBOOT_COLLABORATION.md`。
+
 ## 1. 本次交付的真实状态
 
 这是一个完整可玩的 Web 测试版，不是单关演示，也不是 Godot 工程。玩家可以从标题连续走到最终结局，五关均有真实输入、成功判定和回地图流程。

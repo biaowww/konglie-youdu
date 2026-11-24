@@ -1,0 +1,62 @@
+{
+  "checks": [
+    {
+      "name": "四格漫画后进入开始界面",
+      "pass": true
+    },
+    {
+      "name": "统一角色与神像资产已加载",
+      "pass": true
+    },
+    {
+      "name": "开始界面可进入痴",
+      "pass": true
+    },
+    {
+      "name": "神像切换进入里世界",
+      "pass": true
+    },
+    {
+      "name": "灯海与探灯同时存在",
+      "pass": true
+    },
+    {
+      "name": "手绘 UI 已加载",
+      "pass": true
+    },
+    {
+      "name": "幻境灯可被识别",
+      "pass": true
+    },
+    {
+      "name": "忿出现并增加灯海",
+      "pass": true
+    },
+    {
+      "name": "忿在场景中可见",
+      "pass": true
+    },
+    {
+      "name": "三个痴均可点击并完成",
+      "pass": true
+    },
+    {
+      "name": "375px 触摸可收集一个痴",
+      "pass": true
+    },
+    {
+      "name": "移动端原型无横向溢出",
+      "pass": true
+    },
+    {
+      "name": "无控制台错误",
+      "pass": true
+    },
+    {
+      "name": "无失败资源",
+      "pass": true
+    }
+  ],
+  "consoleErrors": [],
+  "networkErrors": []
+}
