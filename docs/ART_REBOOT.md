@@ -40,7 +40,7 @@
 
 `node qa/art-reboot/verify.mjs` 使用真实 Chrome/CDP、真实鼠标与触摸事件；默认读 `GAME_URL`，否则自带静态服务读取 `app/dist`。
 
-最近一次：**153/153 通过，控制台错误 0，失败资源 0**；`npm run build`、`npm run lint`、`git diff --check` 均通过。
+公开地址 **https://biaowww.github.io/konglie-youdu-preview/** 最近一次：**153/153 通过，控制台错误 0，失败资源 0**；`npm run build`、`npm run lint`、`git diff --check` 均通过。
 
 覆盖：漫画 86 项；CG 时长与静音；首层 3 岔、次层 2 岔；路线与痴入口刷新恢复；痴桌面和 375px 完整交互；复色地图；结尾与重开；375px 触摸、热区、无横向溢出；控制台与失败资源。
 
