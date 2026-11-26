@@ -16,7 +16,7 @@ const TEXT = {
   1: '卦山的颜色，正在一笔一笔掉下去。',
   2: '寄往卦山的信，全都退了回来。',
   3: '渡是我的主人。玉玦还在响——渡还在山上。',
-  4: '五处浊色未清。我上山。',
+  4: '主人的五样心事，散落山中。我上山。',
 }
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 const report = { url: '', checks: [], measurements: {}, artMaps: {}, consoleErrors: [], networkErrors: [] }
@@ -203,7 +203,7 @@ try {
   await send('Emulation.setDeviceMetricsOverride', { width: 1440, height: 900, deviceScaleFactor: 1, mobile: false }, sessionId)
   await send('Page.navigate', { url: URL_ }, sessionId)
   check('入口载入并停在第①格', await until(`window.__qa && __qa.step()==='1'`, 15000))
-  for (const name of ['c1-mountain', 'c2-window', 'c3-jade', 'c4-scroll']) report.artMaps[name] = await evaluate(`__qa.artMap('./assets/art-reboot/fable/${name}.webp')`)
+  for (const name of ['c1-mountain', 'c2-window', 'c3-jade', 'a-mountain']) report.artMaps[name] = await evaluate(`__qa.artMap('./assets/art-reboot/fable/${name}.webp')`)
   check('没有旧轮播/卡片结构', await evaluate(`!document.querySelector('.comic-rail, .comic-main-shot, .reboot-title-copy, .reboot-primary')`))
 
   await sleep(900)
@@ -275,7 +275,7 @@ try {
   await click(NEXT)
   check('停稳后接入开始界面', await until(`__qa.step()==='title'`))
   const cont = await evaluate(`(()=>{const s=document.querySelector('.fable-scroll'),i=document.querySelector('.fable-scroll > img');return{sameNode:s.__same===true&&i.__same===true,rect:__qa.rect(s),transform:getComputedStyle(s).transform,src:i.getAttribute('src'),natural:i.naturalWidth}})()`)
-  check('开始界面与停稳竖卷是同一节点、同一张图、同一位置（无跳切）', cont.sameNode && cont.transform === 'none' && cont.src.endsWith('c4-scroll.webp') && cont.natural > 0 && JSON.stringify(cont.rect) === JSON.stringify(settledBox.rect), cont)
+  check('开始界面与停稳竖卷是同一节点、同一张图、同一位置（无跳切）', cont.sameNode && cont.transform === 'none' && cont.src.endsWith('a-mountain.webp') && cont.natural > 0 && JSON.stringify(cont.rect) === JSON.stringify(settledBox.rect), cont)
   await sleep(1700)
   const title = await evaluate(`(()=>{const h=document.querySelector('.fable-title h1'),seal=document.querySelector('[data-act="enter"]'),re=document.querySelector('[data-act="replay"]');const cs=getComputedStyle(seal);return{h1:h?.textContent,h1Opacity:__qa.opacity(h),hRect:__qa.rect(h),seal:seal?.textContent.trim(),sealOpacity:__qa.opacity(seal),sealRect:__qa.rect(seal),sealRadius:cs.borderRadius,sealShadow:cs.boxShadow,sealClip:cs.clipPath.slice(0,7),replay:re?.textContent.trim(),reRect:__qa.rect(re),stage:__qa.rect(__qa.stage())}})()`)
   report.measurements.title = title

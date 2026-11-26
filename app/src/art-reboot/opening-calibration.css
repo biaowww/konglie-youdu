@@ -11,8 +11,8 @@
   --p3-jade-x: 33%; --p3-jade-y: 76%;
   /* ④ 864×1536：左上 x12–50% y0–27% 与右下 x70–100% y68–100% 是留白；深色主体（游）在左下 */
   --p4-summit-x: 82%; --p4-summit-y: 3.5%;
-  --c4-left: 73%; --c4-top: 68%;
-  --title-left: 17%; --title-top: 3.5%;
+  --c4-left: 73%; --c4-top: 62%;
+  --title-left: 34%; --title-top: 3.5%;
   --seal-left: 71%; --seal-top: 74%;
 }
 

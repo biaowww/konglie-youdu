@@ -18,7 +18,7 @@ const TEXT = {
   p1: ['卦山的颜色，', '正在一笔一笔掉下去。'],
   p2: ['寄往卦山的信，', '全都退了回来。'],
   p3: ['渡是我的主人。', '玉玦还在响——', '渡还在山上。'],
-  p4: ['五处浊色未清。', '我上山。'],
+  p4: ['主人的五样心事，', '散落山中。我上山。'],
 }
 
 // ① 退色米点：[x%, y%, 朝向deg]，自右向左排列，落在山体着墨处。
@@ -32,7 +32,7 @@ const P3_DOTS: [string, number, number][] = [
   ['#a9bfe6', -2.4, -1.6], ['#bba8da', 2.2, -1.9], ['#bba8da', -2.8, 1.2],
   ['#a9bfe6', 2.6, 1.5], ['#bba8da', 0, 2.6], ['#a9bfe6', 0.4, -2.8],
 ]
-// ④ 五处浊痕旁的漂移点：[x%, y%]（相对竖卷）
+// ④ 未显形墨晕旁的漂移点：[x%, y%]（相对竖卷）
 const P4_MARKS: [number, number][] = [[77, 23], [72, 37], [42, 31], [9, 52], [30, 63]]
 const P4_SUMMIT: [number, number][] = [[-1.6, -0.6], [0.3, -1.3], [1.8, -0.2], [-0.6, 0.9], [1.1, 1.2]]
 
@@ -137,7 +137,7 @@ export default function Opening({ initial = 'comic', onEnter }: Props) {
         {onScroll && (
           <div className="fable-scroll-wrap" data-panel="4">
             <div className={`fable-scroll ${settled ? 'is-settled' : ''}`} onAnimationEnd={onRiseEnd}>
-              <img className="fable-base" src={`${ART}/c4-scroll.webp`} alt="竖卷：游立在山脚，石径蜿蜒上行，贪、嗔、痴、慢、疑五处浊痕分布在不同高度，山顶有淡蓝紫的点" />
+              <img className="fable-base" src={`${ART}/a-mountain.webp`} alt="竖卷：游立在山脚，石径蜿蜒上行，几处未显形的墨晕散落在途中，山顶有淡蓝紫的点" />
               <div className="fable-fx" aria-hidden="true">
                 {P4_MARKS.map(([x, y], index) => (
                   <i key={index} className="p4-mark" style={vars({ left: `${x}%`, top: `${y}%`, '--i': index })} />
@@ -156,7 +156,7 @@ export default function Opening({ initial = 'comic', onEnter }: Props) {
             )}
             {isTitle && (
               <div className="fable-title">
-                <h1><span>空裂：</span><span>游渡</span></h1>
+                <h1><span>空裂：游渡</span></h1>
                 <button type="button" className="fable-seal" data-act="enter" onClick={onEnter} aria-label="入山">
                   <span>入山</span>
                 </button>
