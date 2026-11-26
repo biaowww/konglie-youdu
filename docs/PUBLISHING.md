@@ -17,6 +17,16 @@
 3. 检查 workflow 成功后，再在公开 URL 重跑关键路径与完整通关。
 4. 发布记录更新本文件，验收结果更新 `docs/QA.md`。
 
+## 独立开发预览 · Fable／Opus 切片
+
+**https://biaowww.github.io/konglie-youdu-preview/**
+
+- 预览仓库：`https://github.com/biaowww/konglie-youdu-preview`（public），仅发布构建后的静态文件。
+- 入口为当前 `art-reboot` 切片；预览打包时以其 HTML 替换 `index.html`，不改变源仓库的 V1 主入口。
+- 与本地电脑、sgp-dev 和 SSH 隧道无关，电脑重启后仍可访问；进度仅存当前浏览器。
+- 每次更新运行 build、lint 与真实浏览器验收，再同步 `app/dist` 到预览仓库 `site/`，由 GitHub Actions 发布。
+- 不包含密钥、Drive 原始路径、原始美术工程、QA 浏览器 profile 或 `node_modules`。
+
 ## 旧版 kimi.link 临时入口
 
 **https://konglie-youdu.ok.kimi.link**

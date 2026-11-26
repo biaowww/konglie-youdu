@@ -4,7 +4,7 @@
 
 ## 预览与边界
 
-- 本地入口：`http://127.0.0.1:7106/art-reboot.html`（sgp-dev 上 `npm run preview -- --host 127.0.0.1 --port 7106 --strictPort`，Mac 端 SSH 本地转发，见 `docs/FABLE_RUNBOOK.md`）。
+- 公开预览：`https://biaowww.github.io/konglie-youdu-preview/`。独立静态预览仓库，电脑重启不影响访问；本地开发仍可经 sgp-dev SSH 转发到 `http://127.0.0.1:7106/art-reboot.html`。
 - 分支：`art-reboot-claude`。本阶段改动只提交到该独立分支，不合并；公开 GitHub Pages 仍是旧 V1，未替换。
 - 流程：四格漫画 → 竖卷停稳 → 开始界面 →「入山」→ 痴（旧视觉，仅保留流程）。
 - 本阶段没有新生成图片，没有新增依赖，没有改 `package.json`、锁文件、`vite.config.ts`、旧 `App.tsx` 与发布配置。
