@@ -125,7 +125,7 @@ try {
   const playScene = async (scene, first, second, label, touch) => {
     const press = touch ? tap : click
     await until(`document.querySelector('.echo-game')?.dataset.scene==='${scene}'`)
-    check(`${label}：原画与两个可交互物件已加载`, await evaluate(`document.querySelector('.echo-backdrop').naturalWidth>0 && document.querySelectorAll('.echo-object').length===2`))
+    check(`${label}：原画与两个可交互物件已加载`, await until(`document.querySelector('.echo-backdrop').naturalWidth>0 && document.querySelectorAll('.echo-object').length===2`, 10000))
     const jade = await center('.echo-jade')
     check(`${label}：玉玦热区≥44px`, jade && jade.w >= 44 && jade.h >= 44, jade)
     if (scene === 'bell') {

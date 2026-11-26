@@ -22,10 +22,10 @@
 **https://biaowww.github.io/konglie-youdu-preview/**
 
 - 预览仓库：`https://github.com/biaowww/konglie-youdu-preview`（public），仅发布构建后的静态文件。
-- 入口为当前 `art-reboot` 切片；预览打包时以其 HTML 替换 `index.html`，不改变源仓库的 V1 主入口。
+- 根地址为 A／B 选择页：`/a/` 为修正后的痴全流程，`/b/` 为《空裂：回声》原创因果解谜；不改变源仓库的 V1 主入口。
 - 与本地电脑、sgp-dev 和 SSH 隧道无关，电脑重启后仍可访问；进度仅存当前浏览器。
 - 每次更新运行 build、lint 与真实浏览器验收，再同步 `app/dist` 到预览仓库 `site/`，由 GitHub Actions 分“上传工件／部署”两个 job 发布。
-- 痴单关卡全流程于 2026-11-26 在公开地址完成 153/153 验收，桌面与 375px 触摸均通过，控制台错误与失败资源均为 0。
+- 2026-11-27 双版本公开验收：A 版 153/153、B 版 35/35，桌面与 375px 触摸均通过，控制台错误与失败资源均为 0。
 - 不包含密钥、Drive 原始路径、原始美术工程、QA 浏览器 profile 或 `node_modules`。
 
 ## 旧版 kimi.link 临时入口

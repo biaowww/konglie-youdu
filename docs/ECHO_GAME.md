@@ -27,7 +27,7 @@
 - `app/echo.html`：独立 HTML；`app/vite.config.ts` 只登记入口，不增加依赖。
 - `qa/echo/verify.mjs`：真实 Chrome/CDP，包含错误顺序、真实拖放、刷新恢复、三关完成、结尾、重开和 375px 触摸。
 
-最近本机验收：**35/35**，控制台错误与失败资源均为 0；`npm run build`、`npm run lint` 通过。
+公开地址 `https://biaowww.github.io/konglie-youdu-preview/b/echo.html` 验收：**35/35**，控制台错误与失败资源均为 0；`npm run build`、`npm run lint` 通过。
 
 ## 边界
 
