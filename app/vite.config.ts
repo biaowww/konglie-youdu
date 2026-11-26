@@ -12,6 +12,7 @@ export default defineConfig({
       input: {
         main: path.resolve(__dirname, 'index.html'),
         'art-reboot': path.resolve(__dirname, 'art-reboot.html'),
+        echo: path.resolve(__dirname, 'echo.html'),
       },
     },
   },

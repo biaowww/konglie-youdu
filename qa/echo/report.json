@@ -1,0 +1,184 @@
+{
+  "checks": [
+    {
+      "name": "B 版独立首页",
+      "pass": true
+    },
+    {
+      "name": "桌面·铃：原画与两个可交互物件已加载",
+      "pass": true
+    },
+    {
+      "name": "桌面·铃：玉玦热区≥44px",
+      "pass": true,
+      "detail": {
+        "x": 720,
+        "y": 738,
+        "w": 58,
+        "h": 58
+      }
+    },
+    {
+      "name": "桌面·铃：错误顺序不会推进",
+      "pass": true
+    },
+    {
+      "name": "桌面·铃：玉玦拖放推进因果",
+      "pass": true
+    },
+    {
+      "name": "桌面·铃：刷新恢复本关进度",
+      "pass": true
+    },
+    {
+      "name": "桌面·铃：完整因果演出后完成",
+      "pass": true
+    },
+    {
+      "name": "桌面·种子：原画与两个可交互物件已加载",
+      "pass": true
+    },
+    {
+      "name": "桌面·种子：玉玦热区≥44px",
+      "pass": true,
+      "detail": {
+        "x": 720,
+        "y": 738,
+        "w": 58,
+        "h": 58
+      }
+    },
+    {
+      "name": "桌面·种子：玉玦拖放推进因果",
+      "pass": true
+    },
+    {
+      "name": "桌面·种子：完整因果演出后完成",
+      "pass": true
+    },
+    {
+      "name": "桌面·灯：原画与两个可交互物件已加载",
+      "pass": true
+    },
+    {
+      "name": "桌面·灯：玉玦热区≥44px",
+      "pass": true,
+      "detail": {
+        "x": 720,
+        "y": 738,
+        "w": 58,
+        "h": 58
+      }
+    },
+    {
+      "name": "桌面·灯：玉玦拖放推进因果",
+      "pass": true
+    },
+    {
+      "name": "桌面·灯：完整因果演出后完成",
+      "pass": true
+    },
+    {
+      "name": "桌面：进入两界结尾",
+      "pass": true
+    },
+    {
+      "name": "桌面：可重新开始",
+      "pass": true
+    },
+    {
+      "name": "375px·铃：原画与两个可交互物件已加载",
+      "pass": true
+    },
+    {
+      "name": "375px·铃：玉玦热区≥44px",
+      "pass": true,
+      "detail": {
+        "x": 187.5,
+        "y": 619.328125,
+        "w": 58,
+        "h": 58
+      }
+    },
+    {
+      "name": "375px·铃：错误顺序不会推进",
+      "pass": true
+    },
+    {
+      "name": "375px·铃：玉玦拖放推进因果",
+      "pass": true
+    },
+    {
+      "name": "375px·铃：完整因果演出后完成",
+      "pass": true
+    },
+    {
+      "name": "375px·种子：原画与两个可交互物件已加载",
+      "pass": true
+    },
+    {
+      "name": "375px·种子：玉玦热区≥44px",
+      "pass": true,
+      "detail": {
+        "x": 187.5,
+        "y": 619.328125,
+        "w": 58,
+        "h": 58
+      }
+    },
+    {
+      "name": "375px·种子：玉玦拖放推进因果",
+      "pass": true
+    },
+    {
+      "name": "375px·种子：完整因果演出后完成",
+      "pass": true
+    },
+    {
+      "name": "375px·灯：原画与两个可交互物件已加载",
+      "pass": true
+    },
+    {
+      "name": "375px·灯：玉玦热区≥44px",
+      "pass": true,
+      "detail": {
+        "x": 187.5,
+        "y": 619.328125,
+        "w": 58,
+        "h": 58
+      }
+    },
+    {
+      "name": "375px·灯：玉玦拖放推进因果",
+      "pass": true
+    },
+    {
+      "name": "375px·灯：完整因果演出后完成",
+      "pass": true
+    },
+    {
+      "name": "375px：进入两界结尾",
+      "pass": true
+    },
+    {
+      "name": "375px：可重新开始",
+      "pass": true
+    },
+    {
+      "name": "375px：无横向溢出",
+      "pass": true
+    },
+    {
+      "name": "无控制台错误",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "无失败资源",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "consoleErrors": [],
+  "networkErrors": []
+}
