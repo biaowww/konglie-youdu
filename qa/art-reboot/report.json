@@ -175,7 +175,7 @@
       "pass": true,
       "detail": {
         "settled": "false",
-        "transform": "matrix(1.5, 0, 0, 1.5, -1.87918, 2.86351)",
+        "transform": "matrix(1.5, 0, 0, 1.5, -1.88004, 2.86482)",
         "running": 1
       }
     },
@@ -183,7 +183,7 @@
       "name": "竖卷镜头自下而上（画面向下位移增大）",
       "pass": true,
       "detail": {
-        "t1": "matrix(1.5, 0, 0, 1.5, -1.87918, 2.86351)",
+        "t1": "matrix(1.5, 0, 0, 1.5, -2.32719, 3.54619)",
         "t2": "matrix(1.5, 0, 0, 1.5, -141.855, 216.405)"
       }
     },
@@ -372,7 +372,311 @@
       "pass": true
     },
     {
-      "name": "入山：进入痴流程（旧视觉，下一阶段替换）",
+      "name": "入山：进入痴表世界",
+      "pass": true
+    },
+    {
+      "name": "痴：旧原型结构已不在（无旧痴容器、卡片 HUD）",
+      "pass": true
+    },
+    {
+      "name": "桌面痴：神像热区≥44px",
+      "pass": true,
+      "detail": {
+        "x": 267.828125,
+        "y": 433.796875,
+        "w": 118.078125,
+        "h": 194.390625,
+        "disabled": false
+      }
+    },
+    {
+      "name": "桌面痴：点神像进入里世界",
+      "pass": true
+    },
+    {
+      "name": "桌面痴：提示一由隐说出（无底板）",
+      "pass": true
+    },
+    {
+      "name": "桌面痴：隐的字高≥14px",
+      "pass": true,
+      "detail": 23.04
+    },
+    {
+      "name": "桌面痴：探灯热区≥44px",
+      "pass": true,
+      "detail": {
+        "x": 352.796875,
+        "y": 684.890625,
+        "w": 44,
+        "h": 44,
+        "disabled": false
+      }
+    },
+    {
+      "name": "桌面痴：t1 未照时不可辨",
+      "pass": true
+    },
+    {
+      "name": "桌面痴：拖灯照出 t1",
+      "pass": true
+    },
+    {
+      "name": "桌面痴：t1 热区≥44px",
+      "pass": true,
+      "detail": {
+        "x": 590.390625,
+        "y": 263.68750762939453,
+        "w": 64.43359375,
+        "h": 79.76353454589844,
+        "disabled": false
+      }
+    },
+    {
+      "name": "桌面痴：点中 t1，刻痕亮 1 格",
+      "pass": true
+    },
+    {
+      "name": "桌面痴：t2 未照时不可辨",
+      "pass": true
+    },
+    {
+      "name": "桌面痴：拖灯照出 t2",
+      "pass": true
+    },
+    {
+      "name": "桌面痴：t2 热区≥44px",
+      "pass": true,
+      "detail": {
+        "x": 820.796875,
+        "y": 425.6875,
+        "w": 57.9207763671875,
+        "h": 59.646484375,
+        "disabled": false
+      }
+    },
+    {
+      "name": "桌面痴：点中 t2，刻痕亮 2 格",
+      "pass": true
+    },
+    {
+      "name": "桌面痴：t3 未照时不可辨",
+      "pass": true
+    },
+    {
+      "name": "桌面痴：拖灯照出 t3",
+      "pass": true
+    },
+    {
+      "name": "桌面痴：t3 热区≥44px",
+      "pass": true,
+      "detail": {
+        "x": 489.59375,
+        "y": 555.296875,
+        "w": 50.740478515625,
+        "h": 62.929931640625,
+        "disabled": false
+      }
+    },
+    {
+      "name": "桌面痴：点中 t3，刻痕亮 3 格",
+      "pass": true
+    },
+    {
+      "name": "桌面痴：探灯确实被拖动",
+      "pass": true,
+      "detail": {
+        "lamp0": {
+          "x": 352.796875,
+          "y": 684.890625,
+          "w": 44,
+          "h": 44,
+          "disabled": false
+        },
+        "lamp1": {
+          "x": 489.59375,
+          "y": 555.296875,
+          "w": 44,
+          "h": 44,
+          "disabled": false
+        }
+      }
+    },
+    {
+      "name": "桌面痴：找齐后进入局部复色",
+      "pass": true
+    },
+    {
+      "name": "桌面痴：全程提示≤3次",
+      "pass": true,
+      "detail": "why,click"
+    },
+    {
+      "name": "桌面痴：退出热区≥44px",
+      "pass": true,
+      "detail": {
+        "x": 1406,
+        "y": 868,
+        "w": 44,
+        "h": 44,
+        "disabled": false
+      }
+    },
+    {
+      "name": "痴：下山回到开始界面",
+      "pass": true
+    },
+    {
+      "name": "375px：触摸入山进入痴",
+      "pass": true
+    },
+    {
+      "name": "375px痴：神像热区≥44px",
+      "pass": true,
+      "detail": {
+        "x": 23.953125,
+        "y": 400.140625,
+        "w": 44,
+        "h": 70.3125,
+        "disabled": false
+      }
+    },
+    {
+      "name": "375px痴：点神像进入里世界",
+      "pass": true
+    },
+    {
+      "name": "375px痴：提示一由隐说出（无底板）",
+      "pass": true
+    },
+    {
+      "name": "375px痴：隐的字高≥14px",
+      "pass": true,
+      "detail": 14
+    },
+    {
+      "name": "375px痴：探灯热区≥44px",
+      "pass": true,
+      "detail": {
+        "x": 54.6875,
+        "y": 490.953125,
+        "w": 44,
+        "h": 44,
+        "disabled": false
+      }
+    },
+    {
+      "name": "375px痴：t1 未照时不可辨",
+      "pass": true
+    },
+    {
+      "name": "375px痴：拖灯照出 t1",
+      "pass": true
+    },
+    {
+      "name": "375px痴：t1 热区≥44px",
+      "pass": true,
+      "detail": {
+        "x": 140.625,
+        "y": 338.609375,
+        "w": 53.33758544921875,
+        "h": 53.33758544921875,
+        "disabled": false
+      }
+    },
+    {
+      "name": "375px痴：点中 t1，刻痕亮 1 格",
+      "pass": true
+    },
+    {
+      "name": "375px痴：t2 未照时不可辨",
+      "pass": true
+    },
+    {
+      "name": "375px痴：拖灯照出 t2",
+      "pass": true
+    },
+    {
+      "name": "375px痴：t2 热区≥44px",
+      "pass": true,
+      "detail": {
+        "x": 223.953125,
+        "y": 397.203125,
+        "w": 56.845703125,
+        "h": 56.845703125,
+        "disabled": false
+      }
+    },
+    {
+      "name": "375px痴：点中 t2，刻痕亮 2 格",
+      "pass": true
+    },
+    {
+      "name": "375px痴：t3 未照时不可辨",
+      "pass": true
+    },
+    {
+      "name": "375px痴：拖灯照出 t3",
+      "pass": true
+    },
+    {
+      "name": "375px痴：t3 热区≥44px",
+      "pass": true,
+      "detail": {
+        "x": 104.171875,
+        "y": 444.078125,
+        "w": 49.034271240234375,
+        "h": 49.0343017578125,
+        "disabled": false
+      }
+    },
+    {
+      "name": "375px痴：点中 t3，刻痕亮 3 格",
+      "pass": true
+    },
+    {
+      "name": "375px痴：探灯确实被拖动",
+      "pass": true,
+      "detail": {
+        "lamp0": {
+          "x": 54.6875,
+          "y": 490.953125,
+          "w": 44,
+          "h": 44,
+          "disabled": false
+        },
+        "lamp1": {
+          "x": 104.171875,
+          "y": 444.078125,
+          "w": 44,
+          "h": 44,
+          "disabled": false
+        }
+      }
+    },
+    {
+      "name": "375px痴：找齐后进入局部复色",
+      "pass": true
+    },
+    {
+      "name": "375px痴：全程提示≤3次",
+      "pass": true,
+      "detail": "why,click"
+    },
+    {
+      "name": "375px痴：退出热区≥44px",
+      "pass": true,
+      "detail": {
+        "x": 341,
+        "y": 780,
+        "w": 44,
+        "h": 44,
+        "disabled": false
+      }
+    },
+    {
+      "name": "375px痴：无横向溢出",
       "pass": true
     },
     {

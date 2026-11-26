@@ -295,7 +295,70 @@ try {
   check('跳过：从第①格直达开始界面', await until(`__qa.step()==='title' && !!document.querySelector('[data-act="enter"]')`))
   await sleep(1600)
   await click(ENTER)
-  check('入山：进入痴流程（旧视觉，下一阶段替换）', await until(`document.querySelector('.reboot-chi')?.dataset.phase==='outer'`, 8000))
+  check('入山：进入痴表世界', await until(`document.querySelector('.chi-play')?.dataset.phase==='outer'`, 8000))
+  check('痴：旧原型结构已不在（无旧痴容器、卡片 HUD）', await evaluate(`!document.querySelector('.reboot-chi, .reboot-hud, .reboot-card, .reboot-primary')`))
+  await sleep(700); await screenshot('outer.png')
+
+  // ── 痴：真实交互（鼠标 / 触摸拖灯、点字） ──
+  const playChi = async (label, touch) => {
+    const press = touch ? tap : click
+    const st = await center('.chi-statue')
+    check(`${label}：神像热区≥44px`, st && st.w >= 44 && st.h >= 44, st)
+    await press('.chi-statue')
+    check(`${label}：点神像进入里世界`, await until(`document.querySelector('.chi-play')?.dataset.phase==='inner'`, 5000))
+    check(`${label}：提示一由隐说出（无底板）`, await until(`(()=>{const p=document.querySelector('[data-hint="why"]');return p&&getComputedStyle(p).backgroundColor==='rgba(0, 0, 0, 0)'})()`, 4000))
+    const yinPx = await evaluate(`parseFloat(getComputedStyle(document.querySelector('.chi-yin-text')).fontSize)`)
+    check(`${label}：隐的字高≥14px`, yinPx >= 14, yinPx)
+    const drag = async (to) => {
+      const p = await center('.chi-lamp'); const n = 10
+      if (touch) {
+        await send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: p.x, y: p.y, id: 1 }] }, sessionId)
+        for (let i = 1; i <= n; i++) { await send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: p.x + (to.x - p.x) * i / n, y: p.y + (to.y - p.y) * i / n, id: 1 }] }, sessionId); await sleep(16) }
+        await send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }, sessionId)
+      } else {
+        await send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: p.x, y: p.y }, sessionId)
+        await send('Input.dispatchMouseEvent', { type: 'mousePressed', x: p.x, y: p.y, button: 'left', buttons: 1, clickCount: 1 }, sessionId)
+        for (let i = 1; i <= n; i++) { await send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: p.x + (to.x - p.x) * i / n, y: p.y + (to.y - p.y) * i / n, button: 'left', buttons: 1 }, sessionId); await sleep(16) }
+        await send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: to.x, y: to.y, button: 'left', buttons: 0, clickCount: 1 }, sessionId)
+      }
+      await sleep(300)
+    }
+    const lamp0 = await center('.chi-lamp')
+    check(`${label}：探灯热区≥44px`, lamp0 && lamp0.w >= 44 && lamp0.h >= 44, lamp0)
+    for (const [k, id] of ['t1', 't2', 't3'].entries()) {
+      const sel = `.chi-glyph[data-id="${id}"]`
+      check(`${label}：${id} 未照时不可辨`, await evaluate(`!document.querySelector('${sel}').classList.contains('is-lit')`))
+      const g = await center(sel)
+      await drag(g)
+      check(`${label}：拖灯照出 ${id}`, await evaluate(`document.querySelector('${sel}').classList.contains('is-lit')`))
+      check(`${label}：${id} 热区≥44px`, g.w >= 44 && g.h >= 44, g)
+      if (k === 0 && !touch) { await sleep(600); await screenshot('inner.png') }
+      await press(sel)
+      check(`${label}：点中 ${id}，刻痕亮 ${k + 1} 格`, await until(`document.querySelectorAll('.chi-jade i.is-lit').length===${k + 1}`, 2500))
+    }
+    const lamp1 = await center('.chi-lamp')
+    check(`${label}：探灯确实被拖动`, Math.hypot(lamp1.x - lamp0.x, lamp1.y - lamp0.y) > 30, { lamp0, lamp1 })
+    check(`${label}：找齐后进入局部复色`, await until(`document.querySelector('.chi-play')?.dataset.phase==='complete' && document.querySelector('.chi-bg').getAttribute('src').endsWith('chi-complete.webp')`, 5000))
+    const hints = await evaluate(`document.querySelector('.chi-play').dataset.hints`)
+    check(`${label}：全程提示≤3次`, hints.split(',').filter(Boolean).length <= 3, hints)
+    const ex = await center('.chi-exit')
+    check(`${label}：退出热区≥44px`, ex && ex.w >= 44 && ex.h >= 44, ex)
+  }
+  await playChi('桌面痴', false)
+  await sleep(1200); await screenshot('complete.png')
+  await click('.chi-exit')
+  check('痴：下山回到开始界面', await until(`__qa.step()==='title'`, 5000))
+
+  await send('Emulation.setDeviceMetricsOverride', { width: 375, height: 812, deviceScaleFactor: 2, mobile: true }, sessionId)
+  await send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 1 }, sessionId)
+  await send('Page.navigate', { url: URL_ }, sessionId)
+  await until(`window.__qa && __qa.step()==='1'`, 15000)
+  await tap(SKIP); await until(`__qa.step()==='title'`); await sleep(1600)
+  await tap(ENTER)
+  check('375px：触摸入山进入痴', await until(`document.querySelector('.chi-play')?.dataset.phase==='outer'`, 8000))
+  await playChi('375px痴', true)
+  check('375px痴：无横向溢出', await evaluate(`document.documentElement.scrollWidth<=innerWidth`))
+  await sleep(800); await screenshot('chi-mobile.png')
 
   // ═════ 手机 375×812 触摸 ═════
   await send('Emulation.setDeviceMetricsOverride', { width: 375, height: 812, deviceScaleFactor: 2, mobile: true }, sessionId)
@@ -346,7 +409,7 @@ try {
   check('375px：触摸跳过到开始界面', await until(`__qa.step()==='title'`))
   await sleep(1600)
   await tap(ENTER)
-  check('375px：触摸「入山」进入痴流程', await until(`document.querySelector('.reboot-chi')?.dataset.phase==='outer'`, 8000))
+  check('375px：触摸「入山」进入痴流程', await until(`document.querySelector('.chi-play')?.dataset.phase==='outer'`, 8000))
 
   const failedRequests = new Map()
   for (const event of events) {

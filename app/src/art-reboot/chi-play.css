@@ -1,0 +1,46 @@
+.chi-play{position:fixed;inset:0;background:#eeece6;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;touch-action:none;font-family:"Songti SC","Noto Serif SC",serif;color:#2a2a2a}
+.chi-frame{position:relative;width:min(100vw,calc(100vh*16/9));max-height:100vh;overflow:hidden}
+.chi-play.is-portrait .chi-frame.chi-main{width:100vw;max-height:calc(100vh - 56px)}
+.chi-yu{display:none}
+.chi-scene{position:absolute;inset:0}
+.chi-scene-inner{position:absolute}
+.chi-stage{position:absolute;inset:0;container-type:inline-size;user-select:none;-webkit-user-select:none}
+.chi-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.chi-bg-next{animation:chi-fade .9s ease forwards;opacity:0}
+@keyframes chi-fade{to{opacity:1}}
+.chi-statue{position:absolute;transform:translate(-50%,-50%);min-width:44px;min-height:44px;background:transparent;border:0;cursor:pointer;padding:0}
+.chi-statue:focus-visible{outline:2px dotted #8a5a2a}
+.chi-light{position:absolute;inset:0;pointer-events:none;background:rgba(246,226,190,.32);mix-blend-mode:multiply;backdrop-filter:contrast(1.2) brightness(1.06)}
+.chi-trail{position:absolute;width:.5cqw;height:.22cqw;border-radius:50%;background:#2b2a28;transform:translate(-50%,-50%) rotate(-20deg);pointer-events:none}
+.chi-glyph{position:absolute;transform:translate(-50%,-50%) rotate(var(--r));min-width:44px;min-height:44px;background:transparent;border:0;padding:0;font-family:inherit;color:rgba(110,112,112,.16);cursor:default;transition:color .35s,letter-spacing .35s}
+.chi-glyph.is-lit{color:rgba(28,26,24,.88);cursor:pointer;z-index:3}
+.chi-glyph.is-got{pointer-events:none}
+.chi-lamp{position:absolute;transform:translate(-50%,-50%);width:44px;height:44px;background:transparent;border:0;padding:0;cursor:grab;touch-action:none}
+.chi-lamp i{position:absolute;left:50%;top:50%;width:6px;height:3px;border-radius:50%;background:#d79a5a;opacity:.85}
+.chi-lamp i:nth-child(1){transform:translate(-8px,-2px) rotate(-30deg)}
+.chi-lamp i:nth-child(2){transform:translate(-2px,-7px) rotate(70deg);animation:chi-flame 1.2s ease-in-out 2}
+.chi-lamp i:nth-child(3){transform:translate(3px,0) rotate(20deg)}
+@keyframes chi-flame{50%{opacity:.3}}
+.chi-shard{position:absolute;pointer-events:none;animation:chi-fly 1s cubic-bezier(.4,.1,.6,1) forwards}
+.chi-shard i{position:absolute;width:.5cqw;height:.2cqw;border-radius:50%;background:#1e1d1b;transform:translate(calc(var(--i)*3px),calc(var(--i)*-2px)) rotate(calc(var(--i)*40deg))}
+@keyframes chi-fly{60%{transform:translate(calc(var(--tx)*.5),calc(var(--ty)*.5 - 6cqw))}to{transform:translate(var(--tx),var(--ty));opacity:0}}
+.chi-jade{position:absolute;width:28px;height:28px;transform:translate(-50%,-50%);pointer-events:none}
+.chi-jade i{position:absolute;left:50%;top:50%;width:3px;height:7px;border-radius:40%;background:rgba(60,70,60,.35);transform:translate(-50%,-50%) rotate(var(--a)) translateY(-13px)}
+.chi-jade i.is-lit{background:#7fb59a}
+.chi-jade.is-flash{animation:chi-jflash .5s ease 2}
+@keyframes chi-jflash{50%{filter:brightness(1.6) saturate(1.4)}}
+.chi-yin{position:absolute;pointer-events:none}
+.chi-yin-dots i{position:absolute;width:.45cqw;height:.18cqw;border-radius:50%;background:#2a2928;opacity:.35;transform:rotate(calc(var(--i)*40deg)) translateX(calc(var(--i)*.3cqw));transition:transform .8s}
+.chi-yin.is-speaking .chi-yin-dots i{transform:rotate(calc(var(--i)*40deg)) translateX(.4cqw);opacity:.7}
+.chi-yin-text{position:absolute;right:1cqw;top:-6cqw;margin:0;writing-mode:vertical-rl;font-size:max(14px,1.6cqw);line-height:1.6;display:flex;gap:.4em;color:#262523}
+.chi-yin-text b{font-weight:400;opacity:0;animation:chi-ink .5s ease forwards;animation-delay:var(--d)}
+@keyframes chi-ink{from{opacity:0;filter:blur(2px)}to{opacity:1;filter:none}}
+.chi-fen{position:absolute;left:44%;top:30%;pointer-events:none;opacity:0;transition:opacity .4s,transform 1.4s}
+.chi-fen i{position:absolute;width:1.4cqw;height:.35cqw;border-radius:50%;background:#4a6aa8;opacity:.6;transform:rotate(var(--a))}
+.chi-fen.is-cross{opacity:1;transform:translateX(10cqw)}
+.chi-fen.is-warm{opacity:.8;left:53%;top:18%}
+.chi-fen.is-warm i{background:#c7864a}
+.chi-nav{position:absolute;right:12px;bottom:10px;display:flex;gap:12px;align-items:center}
+.chi-cue{font-size:14px;color:#55524c;writing-mode:vertical-rl}
+.chi-exit{min-width:44px;min-height:44px;background:transparent;border:0;font:inherit;font-size:15px;color:#2a2826;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.chi-play *{animation:none!important;transition:none!important}.chi-yin-text b{opacity:1}}
