@@ -1,5 +1,5 @@
 {
-  "url": "http://127.0.0.1:7109/art-reboot.html",
+  "url": "https://biaowww.github.io/konglie-youdu-preview/a/art-reboot.html",
   "checks": [
     {
       "name": "入口载入并停在第①格",
@@ -175,7 +175,7 @@
       "pass": true,
       "detail": {
         "settled": "false",
-        "transform": "matrix(1.5, 0, 0, 1.5, -0.045919, 0.0699719)",
+        "transform": "matrix(1.5, 0, 0, 1.5, 0, 0)",
         "running": 1
       }
     },
@@ -183,8 +183,8 @@
       "name": "竖卷镜头自下而上（画面向下位移增大）",
       "pass": true,
       "detail": {
-        "t1": "matrix(1.5, 0, 0, 1.5, -0.123401, 0.18804)",
-        "t2": "matrix(1.5, 0, 0, 1.5, -141.611, 215.788)"
+        "t1": "matrix(1.5, 0, 0, 1.5, 0, 0)",
+        "t2": "matrix(1.5, 0, 0, 1.5, -140.448, 214.016)"
       }
     },
     {
