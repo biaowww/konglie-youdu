@@ -1,60 +1,71 @@
-# art-reboot-claude：独立切片 · 阶段一（四格漫画＋开始界面）
+# art-reboot-claude：痴单关卡全流程切片
 
-> 本文件只描述 Fable 重做后的当前状态。**这是“漫画＋开始界面”的阶段 playable，不是完整切片：痴关卡的视觉与玩法仍是旧原型，待下一阶段按导演方案整体替换。**
+> 当前版本完成“痴”的 0→1 垂直切片：漫画、短 CG、分支地图、痴关卡、复色地图、结尾与重开。其他四关只保留讨论，不实现、不生成美术，也没有可点击的假入口。
 
 ## 预览与边界
 
-- 公开预览：`https://biaowww.github.io/konglie-youdu-preview/`。独立静态预览仓库，电脑重启不影响访问；本地开发仍可经 sgp-dev SSH 转发到 `http://127.0.0.1:7106/art-reboot.html`。
-- 分支：`art-reboot-claude`。本阶段改动只提交到该独立分支，不合并；公开 GitHub Pages 仍是旧 V1，未替换。
-- 流程：四格漫画 → 竖卷停稳 → 开始界面 →「入山」→ 痴（旧视觉，仅保留流程）。
-- 本阶段没有新生成图片，没有新增依赖，没有改 `package.json`、锁文件、`vite.config.ts`、旧 `App.tsx` 与发布配置。
+- 公开 playable：**https://biaowww.github.io/konglie-youdu-preview/**。独立静态预览仓库，电脑、服务器或 SSH 隧道重启都不影响入口。
+- 源分支：`art-reboot-claude`。不合并、不替换公开 V1；预览仓库只包含构建后的静态文件。
+- 流程：四格漫画 → 可跳过的短 CG → 首层 3 岔 → 次层 2 岔 → 同一个“痴” → 复色地图 → 两界交界 → 重开。
+- 路线与结尾保存在当前浏览器的 `localStorage`（`youdu-slice-journey-v1`），刷新后恢复；无账号、后端或联网进度。
+- 没有新增依赖，没有改 `package.json`、锁文件、`vite.config.ts`、旧 `App.tsx` 或 V1 发布配置。
 
-## 本阶段资产
+## 资产
 
-由 `import_asset` 从候选图转为 WebP，原图未改，位于 `app/public/assets/art-reboot/fable/`：
+开发资产位于 `app/public/assets/art-reboot/fable/`；候选原图与元数据同步于 Drive `03 Art/AI生成资产/claude/`。
 
-| 文件 | 来源 | 尺寸 | 用途 |
-|---|---|---|---|
-| `c1-mountain.webp` | `art-candidates/fable-slice/c1-mountain.png` | 1536×864 | 第①格 |
-| `c2-window.webp` | `art-candidates/fable-slice/c2-window.png` | 864×1536 | 第②格 |
-| `c3-jade.webp` | `art-candidates/fable-slice/c3-jade.png` | 1024×1024 | 第③格 |
-| `c4-scroll.webp` | `art-candidates/fable-v1/05-opening.png` | 864×1536 | 第④格竖卷与开始界面（同一张） |
+| 文件 | 来源 | 用途 |
+|---|---|---|
+| `c1-mountain.webp` | Fable 候选 `c1-mountain.png` | 第①格与 CG 参考 |
+| `c2-window.webp` | Fable 候选 `c2-window.png` | 第②格 |
+| `c3-jade.webp` | Fable 候选 `c3-jade.png` | 第③格与结尾 |
+| `c4-scroll.webp` | Fable 候选 `05-opening.png` | 第④格、开始界面与分支地图 |
+| `chi-outer.webp` | Opus 合成 `final-outer.png` | 痴表世界 |
+| `chi-inner.webp` | Opus 合成 `final-inner.png` | 痴里世界 |
+| `chi-complete.webp` | Opus 合成 `final-complete.png` | 痴局部复色 |
+| `gua-arrival.mp4` | 一条 Seedance 首尾帧测试，4.04 秒、854×480、24fps、无音轨 | 入山短 CG |
 
-旧的 `cinematic/comic-0*.webp`、白描猫、卡片式标题、分镜缩略图轮播不再被漫画与开始界面引用。
+痴的神像不使用生成图里的写实活猫。`qa/art-reboot/prepare_chi_assets.py` 只依赖 Pillow，复用 `03 Art` 原画的抽象对称猫神像，按神龛遮挡、各状态色板和米点尺度合成到三个同机位场景。原始美术不修改；放大检查图在 `qa/art-reboot/niche-*.png`。
 
 ## 实现
 
-- `app/src/art-reboot/Opening.tsx`：四格漫画与开始界面是同一个组件、同一块 9:16 纸面。
-  - ①横长条（约 2.25:1）、②竖窄条（9:16 整幅不裁）、③斜切格，三格在同一页逐格落下，已读的格退淡；不是轮播，没有缩略图栏。
-  - 文字不加底板、边框或气泡，写在纸面与原画自身的留白里；②③④与标题为竖排。
-  - 动效只作用于当前格、次数有限：
-    - ① 十二粒米点自右向左逐粒把身下的点触褪淡（`backdrop-filter`，不另画新东西）。
-    - ② 游周围洇化区的毛边呼吸；左下信堆一角轻颤（都是原画自身的局部在动）。
-    - ③ 玉玦两拍（原画提亮两次）、包带随之轻摆、玦口淡蓝紫点聚拢后散开。
-    - ④ 竖卷自左下的游斜上到山顶，再退回全卷停稳；停稳后五处浊痕旁的点轻微漂移、山顶玉色点脉动。
-  - 第④格停稳后，**同一个 DOM 节点、同一张图、同一位置**原地成为开始界面背景，标题「空裂：游渡」写在左上留白，朱色印章「入山」盖在右下留白，「重看漫画」为右下墨字。
-  - 操作：`前格`／`跳过`／`后格`（末格停稳后为`启程`），键盘 ←/→/Esc 同效；上行途中按`后格`立即停稳。支持 `prefers-reduced-motion`。
-- `app/src/art-reboot/styles.css`：漫画与开始界面的基础样式；旧痴样式原样保留。
-- `app/src/art-reboot/opening-calibration.css`：按原画留白校准后的版式与动效坐标（全部集中成 CSS 变量）。
-- `app/src/art-reboot/ArtRebootApp.tsx`：只负责 漫画/开始界面 ↔ 痴 的切换。`RebootComic.tsx` 仅转出 `Opening`，旧轮播实现已移除。
+- `Opening.tsx`：四格不等画幅、各自局部有限动效、前进／后退／跳过、竖卷原地接入开始界面；保留既有的 86 项漫画验收。
+- `ArrivalClip.tsx`：静音、自动播放失败时可手动播放、可跳过；尊重减少动态效果。
+- `JourneyMap.tsx`：真实路径状态而非线性 `completed.length`。首层三选一、次层二选一，全部汇合到同一痴节点；未选路径关闭，已选路径与复色轨迹保留，完成后开放两界交界。分支只改变路线描述，不增加装备、战斗或其他四关。
+- `ChiPlay.tsx` + `chi-play.css`：表世界 → 点神像 → 同机位里世界 → 拖动不规则纸色探灯 → 看清并点击三个“痴” → 墨点进入玉玦 → 三道刻痕逐亮 → 局部复色。包含相似干扰字、隐最多三次提示、蓝忿短暂干扰、44px 热区、键盘移动探灯与减少动态效果。竖排文字按列从右向左阅读；手机提高场景构图并保留玉玦可见区域。
+- `SliceEnding.tsx`：玉玦与淡蓝紫点簇表现重新建立联系，不做其他四关或完整重逢演出。
+- `ArtRebootApp.tsx`：串联漫画、CG、地图、痴、复色地图和结尾；重开清除路线。
 
 ## 验收
 
-`node qa/art-reboot/verify.mjs`（真实 Chrome / CDP，真实鼠标与触摸事件；默认读 `GAME_URL`，否则自带静态服务读 `app/dist`）。最近一次：**86 项全部通过，控制台错误 0，失败资源 0**；`npm run build`、`npm run lint` 通过。
+`node qa/art-reboot/verify.mjs` 使用真实 Chrome/CDP、真实鼠标与触摸事件；默认读 `GAME_URL`，否则自带静态服务读取 `app/dist`。
 
-覆盖内容：四格文字逐字正确、可见、不折行、完整在画面内、字号≥14px；前进、后退、跳过、重看；不等画幅与斜切格；动效仅当前格运行；竖卷上行、自行停稳、中途可停；开始界面与竖卷同节点同位置；印章无圆角无投影；375×812 触摸全流程、热区≥44px、印章在下半屏、无横向溢出；「入山」进入痴流程。
+最近一次：**153/153 通过，控制台错误 0，失败资源 0**；`npm run build`、`npm run lint`、`git diff --check` 均通过。
 
-“落在留白”是实测而非目测：脚本把当前可见原画按实际裁切画进画布，统计文字／标题／印章身下的着墨像素比例，上限 8%。实测：四格文字 0–1.8%，标题 0.4%，印章 0%（桌面与 375px 一致）。
+覆盖：漫画 86 项；CG 时长与静音；首层 3 岔、次层 2 岔；路线与痴入口刷新恢复；痴桌面和 375px 完整交互；复色地图；结尾与重开；375px 触摸、热区、无横向溢出；控制台与失败资源。
 
-截图与报告在 `qa/art-reboot/`：`comic-1.png`–`comic-4.png`、`title.png`、`mobile.png`，另有 `mobile-comic-4.png`、`mobile-title.png`、`report.json`（含四张原画的墨量网格 `artMaps`）。该目录里的 `outer/inner/fen/complete.png` 与 `profile/` 是旧脚本遗留，不属于本阶段。
+关键证据位于 `qa/art-reboot/`：`comic-*.png`、`title.png`、`map.png`、`outer.png`、`inner.png`、`complete.png`、`map-restored.png`、`ending.png`、`mobile.png`、`chi-mobile.png`、`mobile-map.png`、`report.json`。
 
-## 已知局限与未完成
+## 开发与成本约束
 
-- **动效坐标未经人眼确认。** 本阶段开发会话里图片查看结果无法回读，②的毛边区与信角、③的玦口点簇、④的五处漂移点与山顶点，位置是根据 `artMaps` 的墨量／彩度网格推算的；文字、标题、印章的留白位置有着墨比例实测支撑，这几处局部动效没有。请对照截图与实际运行逐项确认，偏了只需改 `opening-calibration.css` 顶部变量和 `Opening.tsx` 的 `P4_MARKS`。
-- ④的五处漂移点只有四处对上了彩度峰值，第五处是按孤立墨团猜的；山顶“淡蓝紫点”在网格里没有测到明显彩度，脉动点可能没落在原画的点上。
-- ①原画彩度整体很低，“退色”主要表现为点触变淡，暖色褪灰的对比不强。
-- ③为了斜切格画幅裁掉了原画左右各约 9%；玉玦在格内偏左下。
-- **痴关卡（阶段二，已替换旧原型）**：`ChiPlay.tsx` + 独立 `chi-play.css`，`ArtRebootApp` 已改用 `ChiPlay`，Opening 不变。底图 `chi-outer/inner/complete.webp` 同机位。流程：表世界 → 点神像（≥44px 热区）→ 里世界淡入 → 拖不规则探灯（12 角多边形光区，纸色略暖，无渐变圆；身后 3 粒渐淡墨点）→ 光内「痴」字可读、光外淡到不可辨，另有 4 个干扰字 → 点字碎成米点沿弧线飞向游包带上的玉玦，外弧刻痕亮一格 → 三格齐后玉玦闪两拍、切到局部复色图，忿由蓝转暖 → 「下山」回开始界面。隐的竖排提示无底板、字高≥14px、全程≤3 次（入场／首次照出／20 秒无进展）；蓝忿约 6 秒时横掠寻字区 1.6 秒。方向键也可移动探灯；支持 reduced-motion。375px 竖屏改用 14%–86% 取景。
-- `verify.mjs` 已加入痴：桌面鼠标、375px 触摸各走一遍真实拖灯与点字，校验热区、刻痕逐格、复色、提示次数、无横向溢出；截图 `outer.png`、`inner.png`、`complete.png`、`chi-mobile.png`（`mobile.png` 仍为漫画）。最近一次 **132/132 通过，控制台错误 0，失败资源 0**；build、lint 通过。注意：本次脚本跑的是环境变量 `GAME_URL`（127.0.0.1:7106 开发服务）。
-- **痴未完成项**：神像热区、七个字、隐、玉玦、忿的坐标均是按 1536×864 估算的百分比，本阶段**未看图校对**，需对照截图确认神像/玉玦/右干留白是否对上并改 `ChiPlay.tsx` 顶部常量；光区内“点触散开”仅以 backdrop 对比度近似；复色是整图切换，不是逐点自神龛扩散；`WIN_YU_MOBILE` 游的特写框尚未启用（CSS 隐藏）；旧 `ChiReboot.tsx` 与 `styles.css` 旧痴样式仍在但已无入口；旧 `tools/qa_art_reboot.mjs` 未删除也未更新。
-- 没有音效；没有其他四关、地图与结局。
+- Fable 负责美术导演方案和已有候选，不再重复分析整套资料。
+- Opus 负责痴工程与神像合成；断点续写只读取当前组件，避免长上下文。
+- Kimi Code 负责 CG、地图与结尾集成、公开发布、截图复核、测试和文档。
+- 静态美术优先复用原画；只制作一条 CG。图片历史不重复传递，工程修改优先小范围补丁。
+
+## 协作文档
+
+Drive `02 GDD/协作修订/`：
+
+- `空裂：游渡-主GDD-协作版.docx`
+- `游渡-关卡流程和解密-协作版.docx`
+
+AI 新增／修改使用黄色高亮，讨论使用 Word 原生批注。下一轮先读取用户更新后的协作版，再追加修改，不覆盖原始文件或用户迭代。
+
+## 未完成与后续
+
+- 嗔、慢、疑、贪的具体玩法和美术均未实现；后续沿用“观察—聚焦—辨认—吸收—复色”的认知循环逐项讨论，不直接视为定稿。
+- 没有正式配乐或音效。
+- 探灯的“点触散开”仍是视觉近似，复色采用同机位整图切换，不是逐点物理模拟。
+- `WIN_YU_MOBILE` 特写框未启用；旧 `ChiReboot.tsx`、旧痴样式和旧 QA 脚本保留作历史参考，已无入口。
+- Fable 的最终美术复核与原画师终审尚未执行；候选图不冒充人工清稿或最终生产美术。

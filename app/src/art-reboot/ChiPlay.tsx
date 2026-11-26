@@ -9,7 +9,7 @@ type Phase = 'outer' | 'turning' | 'inner' | 'complete'
 type Glyph = { id: string; ch: string; x: number; y: number; size: number; rot: number; target: boolean }
 type Win = { x0: number; y0: number; x1: number; y1: number }
 type Pt = { x: number; y: number }
-type Props = { onExit: () => void }
+type Props = { onExit: (completed: boolean) => void }
 
 const IMG = './assets/art-reboot/fable/'
 const GLYPHS: Glyph[] = [
@@ -187,13 +187,13 @@ export default function ChiPlay({ onExit }: Props) {
           {phase === 'complete' && <div className="chi-fen is-warm" aria-hidden="true">{FEN.map(([x, y, a], i) => <i key={i} style={{ left: `${x}cqw`, top: `${y}cqw`, '--a': `${a}deg` } as CSSProperties} />)}</div>}
           {phase !== 'outer' && phase !== 'turning' && <Jade found={found.length} flash={flash || phase === 'complete'} />}
           {phase === 'inner' && <YinWords lines={hint ? HINTS[hint] : null} k={hint ?? ''} />}
-          {phase === 'complete' && <YinWords lines={['浊色清了', '玉玦又指向山上']} k="done" />}
+          {phase === 'complete' && <YinWords lines={['浊色清了', '玉玦向上']} k="done" />}
         </div>
       </Frame>
       {portrait && phase !== 'outer' && <Frame win={WIN_YU_MOBILE} className="chi-yu">{null}</Frame>}
       <nav className="chi-nav">
         {phase === 'outer' && <span className="chi-cue">点神像</span>}
-        <button className="chi-exit" onClick={onExit}>{phase === 'complete' ? '下山' : '退出'}</button>
+        <button className="chi-exit" onClick={() => onExit(phase === 'complete')}>{phase === 'complete' ? '下山' : '退出'}</button>
       </nav>
     </main>
   )

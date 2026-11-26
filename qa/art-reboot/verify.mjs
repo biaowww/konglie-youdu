@@ -294,10 +294,32 @@ try {
   await click(SKIP)
   check('跳过：从第①格直达开始界面', await until(`__qa.step()==='title' && !!document.querySelector('[data-act="enter"]')`))
   await sleep(1600)
+  const enterChi = async (label, touch, first, second) => {
+    const press = touch ? tap : click
+    if (await evaluate(`!!document.querySelector('[data-screen="arrival"]')`)) {
+      await until(`document.querySelector('video')?.readyState>=2`, 10000)
+      const video = await evaluate(`(()=>{const v=document.querySelector('video');return{duration:v?.duration,muted:v?.muted,ready:v?.readyState}})()`)
+      check(`${label}：短 CG 可播放且静音`, video.duration > 3 && video.duration < 5 && video.muted && video.ready >= 2, video)
+      await press('[data-act="skip-cg"]')
+    }
+    check(`${label}：首层显示 3 个可选分叉`, await until(`document.querySelectorAll('[data-screen="map"][data-step="first"] .journey-node.is-active').length===3`, 8000))
+    if (!touch) await screenshot('map.png')
+    await press(`[data-node="${first}"]`)
+    check(`${label}：次层显示 2 个可选分叉`, await until(`document.querySelectorAll('[data-screen="map"][data-step="second"] .journey-node.is-active').length===2`, 5000))
+    await press(`[data-node="${second}"]`)
+    check(`${label}：两次选择后开放同一个痴`, await until(`!!document.querySelector('[data-screen="map"][data-step="chi"] [data-node="chi"].is-active')`, 5000))
+    if (!touch) {
+      await send('Page.navigate', { url: URL_ }, sessionId)
+      check(`${label}：刷新后恢复路线与痴入口`, await until(`!!document.querySelector('[data-screen="map"][data-step="chi"] [data-node="chi"].is-active') && JSON.parse(localStorage.getItem('youdu-slice-journey-v1')).path.length===2`, 8000))
+    }
+    await press('[data-node="chi"]')
+    check(`${label}：进入痴表世界`, await until(`document.querySelector('.chi-play')?.dataset.phase==='outer'`, 8000))
+    check(`${label}：无旧痴容器或卡片 HUD`, await evaluate(`!document.querySelector('.reboot-chi, .reboot-hud, .reboot-card, .reboot-primary')`))
+    await sleep(700)
+    if (!touch) await screenshot('outer.png')
+  }
   await click(ENTER)
-  check('入山：进入痴表世界', await until(`document.querySelector('.chi-play')?.dataset.phase==='outer'`, 8000))
-  check('痴：旧原型结构已不在（无旧痴容器、卡片 HUD）', await evaluate(`!document.querySelector('.reboot-chi, .reboot-hud, .reboot-card, .reboot-primary')`))
-  await sleep(700); await screenshot('outer.png')
+  await enterChi('桌面', false, 'tree', 'steps')
 
   // ── 痴：真实交互（鼠标 / 触摸拖灯、点字） ──
   const playChi = async (label, touch) => {
@@ -347,7 +369,15 @@ try {
   await playChi('桌面痴', false)
   await sleep(1200); await screenshot('complete.png')
   await click('.chi-exit')
-  check('痴：下山回到开始界面', await until(`__qa.step()==='title'`, 5000))
+  check('痴：下山回到复色地图', await until(`!!document.querySelector('[data-screen="map"][data-step="restored"] [data-node="summit"].is-active')`, 5000))
+  await screenshot('map-restored.png')
+  await click('[data-node="summit"]')
+  check('两界交界结尾可见', await until(`!!document.querySelector('[data-screen="ending"]')`, 5000))
+  await screenshot('ending.png')
+  await send('Page.navigate', { url: URL_ }, sessionId)
+  check('刷新后仍恢复结尾', await until(`!!document.querySelector('[data-screen="ending"]')`, 8000))
+  await click('[data-act="restart"]')
+  check('重开后回到开始界面', await until(`__qa.step()==='title'`, 5000))
 
   await send('Emulation.setDeviceMetricsOverride', { width: 375, height: 812, deviceScaleFactor: 2, mobile: true }, sessionId)
   await send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 1 }, sessionId)
@@ -355,10 +385,17 @@ try {
   await until(`window.__qa && __qa.step()==='1'`, 15000)
   await tap(SKIP); await until(`__qa.step()==='title'`); await sleep(1600)
   await tap(ENTER)
-  check('375px：触摸入山进入痴', await until(`document.querySelector('.chi-play')?.dataset.phase==='outer'`, 8000))
+  await enterChi('375px直接入山', true, 'creek', 'lamp')
   await playChi('375px痴', true)
   check('375px痴：无横向溢出', await evaluate(`document.documentElement.scrollWidth<=innerWidth`))
   await sleep(800); await screenshot('chi-mobile.png')
+  await tap('.chi-exit')
+  check('375px：下山回到复色地图', await until(`!!document.querySelector('[data-screen="map"][data-step="restored"]')`, 5000))
+  await screenshot('mobile-map.png')
+  await tap('[data-node="summit"]')
+  check('375px：触摸进入结尾', await until(`!!document.querySelector('[data-screen="ending"]')`, 5000))
+  await tap('[data-act="restart"]')
+  check('375px：触摸重开', await until(`__qa.step()==='title'`, 5000))
 
   // ═════ 手机 375×812 触摸 ═════
   await send('Emulation.setDeviceMetricsOverride', { width: 375, height: 812, deviceScaleFactor: 2, mobile: true }, sessionId)
@@ -409,7 +446,7 @@ try {
   check('375px：触摸跳过到开始界面', await until(`__qa.step()==='title'`))
   await sleep(1600)
   await tap(ENTER)
-  check('375px：触摸「入山」进入痴流程', await until(`document.querySelector('.chi-play')?.dataset.phase==='outer'`, 8000))
+  await enterChi('375px完整流程', true, 'cloud', 'steps')
 
   const failedRequests = new Map()
   for (const event of events) {
